@@ -1,0 +1,18 @@
+------Everyday things------
+
+discoverability
+understanding
+HCD
+human centered design
+
+affordances
+signifiers
+constraints
+mapping
+feedback
+
+-----Simple and usable-----
+
+Make technology simple  
+Continually adding features to software turns out to be equally
+unsustainable. 

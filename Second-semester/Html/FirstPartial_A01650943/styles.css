@@ -1,0 +1,134 @@
+/*#region*/
+
+/*Reset*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/*#endregion*/
+
+/*CSS*/
+body{
+	width: 1100px;
+	margin: auto;
+	background-color: #000;
+	color: white;
+	font-family: 'Roboto', sans-serif;
+}
+header{
+	background-color: #202424;
+	height: 50px;
+	font-size: 24px;
+	display: flex;
+	flex-direction: row;
+	font-weight: 400;
+	justify-content: space-between;
+	align-items: center;
+}
+#galaxy{
+	margin-left: 80px;
+}
+#pre{
+	font-size: 14px;
+	font-weight: 300;
+	background-color: #0074c2;
+	padding: 18px 40px 18px 40px;
+	margin-right: 80px;
+}
+ul{
+	height: 35px;
+	background-color: #141414;
+	font-size: 12px;
+	display: flex;
+	align-items: center;
+}
+li{
+	display: inline-block;
+	margin-right: 14px;
+}
+#listmrg{
+	margin-left: 80px; 
+	border-bottom: 3px solid #2eafff;
+}
+main{
+	background-color: #000;
+	position: relative;
+}
+main h1{
+	font-size: 50px;
+	position: absolute;
+	left: 160px;
+	top: 70px;
+}
+#box{
+	width: 330px;
+	position: absolute;
+	top: 250px;
+	left: 100px;
+}
+.in{
+	font-family: inherit;
+	height: 40px;
+	width: 300px;
+	margin-bottom: 13px;
+	border-radius: 5px;
+}
+.learn-more{
+	display: flex;
+	justify-content: center;
+	margin-top: 25px;
+	font-size: 13px;
+	font-weight: 300;
+
+	border: 2px solid white;
+	border-radius: 24px;
+
+	width: 160px;
+	color: inherit;
+	padding: 14px 0 14px 0;
+}
+video{
+	width: 800px;
+	margin-left: 300px;
+	margin-top: 145px;
+}
