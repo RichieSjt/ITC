@@ -3,8 +3,9 @@ import java.util.Scanner;
 public class Matrix {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int matrixSize, i;
-        String matrixRow;
+        int matrixSize, i, j, a, sum = 0, counter = 0;
+        String input = "";
+        String[] n; int[][] matrix = new int[99][99]; int[] num;
         boolean rowCheck = true;
         boolean columnCheck;
 
@@ -12,19 +13,44 @@ public class Matrix {
             matrixSize = Integer.parseInt(sc.nextLine());
 
             for(i = 0; i < matrixSize; i++){
-                matrixRow = sc.nextLine();
-                rowCheck &= sumRow(matrixRow);
-                sumColumn(matrixRow, matrixSize);
+                input += sc.nextLine() + " ";   
             }
-            if(rowCheck == true)
-                System.out.println("OK");
-            else
-                System.out.println("Corrupt");
+            n = input.split(" ");
+            num = new int[n.length];
+
+            for(String x : n){
+                a = Integer.parseInt(x);
+                num[counter] = a; 
+                counter++;
+            }
+
+            counter = 0;
+
+            for(i = 0; i < matrixSize-1; i++){
+                for(j = 0; j < matrixSize-1; j++){
+                    matrix[i][j] = num[counter];
+                    counter++;
+                }
+            }
+
+            for(i = 0; i < matrixSize-1; i++){
+                for(j = 0; j < matrixSize-1; j++){
+                    System.out.println(matrix[i][j]);
+                    a = matrix[i][j];
+                    sum += a;
+                }
+                rowCheck &= (sum%2 == 0);
+            }
+            
+            System.out.println(rowCheck);
+
 
             rowCheck = true;
+            
         }while(matrixSize != 0);
         
     }
+    /*
     public static boolean sumRow(String row){
         String[] n;
         int sum = 0, a;
@@ -37,8 +63,6 @@ public class Matrix {
         }
         return (sum%2 == 0);
 
-    }
-    public static int sumColumn(String column, int matrixSize){
-        for(i = 0; )
-    }
+    }*/
+
 }
