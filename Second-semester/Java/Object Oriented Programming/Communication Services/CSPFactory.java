@@ -58,9 +58,9 @@ public class CSPFactory {
         CSP infinitum = new CSP();
         infinitum.name = "Infinitum";
         
-        CellTelephoneCall cellPhone = new CellTelephoneCall();
-        cellPhone.costPerMinute = 1;
-        cellPhone.minutes = cellMins;
+        TelephonePerCall cellPhone = new TelephonePerCall();
+        cellPhone.costPerCall = 1;
+        cellPhone.calls = cellMins;
         infinitum.addService(cellPhone);
 
         InternetConnection internet = new InternetConnection();
@@ -73,7 +73,7 @@ public class CSPFactory {
         CellTelephoneCall localCall = new CellTelephoneCall();
         localCall.costPerMinute = 1;
         localCall.minutes = calls;
-        infinitum.addService(localCall);
+        infinitum.addService(localCall);    
 
         return infinitum;
     }
