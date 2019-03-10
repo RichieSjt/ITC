@@ -124,69 +124,56 @@ a{
 
 .header_top{
     background: #172128 url('../img/home_top.jpg') top center no-repeat;
-    height: 480px;
+    height: auto;
 }
-
 header #header-wrapper{
-    width: 1000px;
-    margin: 0 auto;
-    height: 480px;
-    position: relative;
+    margin: auto;
+    min-height: 500px;
+    max-width: 1100px;
+    padding: 0 40px 0 40px;
 }
 
 header #header-wrapper ul{
-    position: absolute;
-    top: 74px;
-    /* left: 40px; */
-    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+header #menu{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 40px 0 0 0;
+}
+@media screen and (max-width: 750px) {
+    header #header-wrapper ul{ display: none }
 }
 
 header #header-wrapper ul li{
-    display: inline-block;
     margin-right: 70px;
     font-weight: 600;
     letter-spacing: 0.02em;
 }
 
-header .logo_home{
-    position: absolute;
-    top: 62px;
-    right: 34px;
-}
-
 header #header-text{
-    width: 480px;
-    position: absolute;
-    top: 175px;
-    left: 50px;
-}
-
-header #header-text-right{
-    width: 450px;
-    position: absolute;
-    top: 175px;
-    left: 500px;
-}
-
-
-header .header-main-text{
-    color: white;
-    font-size: 36px;
-    font-weight: 400;
-    line-height: 42px;
-    
-    text-shadow: 0px 2px 1px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 80px 0 30px 0;
+    flex-grow: 1;
 }
 
 header .header-main-subtext{
-    
+    display: flex;
     color: white;
     font-size: 18px;
     font-weight: 300;
     line-height: 24px;
-    width: 300px;
-    
+    max-width: 300px;
     text-shadow: 0px 2px 1px rgba(0, 0, 0, 0.5);
+    padding: 25px 15px 0 0;
 }
 
 header .header_carrusel{
@@ -312,14 +299,7 @@ section.grain01{
     background-size: 100% 100%;
 }
 
-#section_grain01_wrapper{
-    width: 1000px;
-    position: relative;
-    margin: 0 auto;
-}
-
 section.grain01 .light_hover{
-    position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
@@ -327,13 +307,24 @@ section.grain01 .light_hover{
     background-color: rgba(255,255,255,0.3);
 }
 
-#section_grain01_wrapper .section_solution{
-    width: 14.2%;
-    float: left;
+#section_grain01_wrapper{
+    max-width: 1400px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
     margin-top: 45px;
     text-align: center;
-    position: relative;
     margin-bottom: 64px;
+    flex-wrap: wrap;
+}
+#section_grain01_wrapper > a{
+    max-width: 150px;
+    margin-left: 20px;
+}
+#section_grain01_wrapper > a img{
+    width: 150px;
 }
 
 .section_solution{
@@ -480,26 +471,22 @@ section.grain02{
 }
 
 #section_grain02_wrapper{
-    width: 1000px;
-    margin: 0 auto;
-    height: 455px;
-    position: relative;
+    margin: auto;
+    height: auto;
+    max-width: 1100px;
+    padding: 60px 40px 60px 40px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: baseline;
 }
 
-section.grain02 #grain02-text{
-    width: 400px;
-    position: absolute;
-    top: 72px;
-    left: 50px;
+#section_grain02_wrapper div{
+    max-width: 380px;
+    flex-grow: 1;
+    height: auto;
 }
-
-section.grain02 #grain02-text-right{
-    width: 400px;
-    position: absolute;
-    top: 72px;
-    left: 550px;
-}
-
 
 section.grain02 .grain02-main-text{
     color: white;
@@ -529,51 +516,59 @@ section.grain02 .grain02-main-subtext{
 /************************************************/
 
 section.grain03{
-    background: #171c1f url('../img/home_grain_bg.jpg') top center no-repeat;
-    height: 580px;
-    position: relative;
-}
-
-section.grain03 .dark_hover{
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0,0,0,0.4);
+    height: auto;
+    background-color: rgb(174, 174, 174);
 }
 
 #section_grain03_wrapper{
-    position: absolute;
-    width: 1000px;
-    left: 50%;
-    margin-left: -500px;
-    height: 455px;
+    margin: auto;
+    height: auto;
+    max-width: 1100px;
     text-shadow: 0px 2px 1px rgba(0, 0, 0, 0.5);
+    padding: 50px 0 50px 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+#homecontactform{
+    display: flex;
+    flex-direction: column;
+}
+#homecontactform > input{
+    display: flex;
+    flex-grow: 1;
+    max-width: 330px;
+}
+#homecontactform > textarea{
+    display: flex;
+    flex-grow: 1;
+    max-width: 330px;
+}
+#maincontactformsubmit{
+    max-width: 330px;
 }
 
 section.grain03 .grain03-main-text{
-    margin: 50px 0 0 50px;
     color: white;
     font-size: 36px;
     font-weight: 400;
     line-height: 42px;
-    
+    margin-bottom: 30px;
     text-shadow: 0px 2px 1px rgba(0, 0, 0, 0.5);
 }
 
 section.grain03 #contacto-left{
-    float: left;
-    width: 400px;
-    margin: 30px 0 0 50px;
     color: white;
     font-size: 14px;
+    max-width: 350px;
 }
 
 
 section.grain03 #contacto-left input[type="text"],
 section.grain03 #contacto-left input[type="email"]{
-    display: block;
+
     margin: 0;
     appearance: none;
     box-shadow: none;
@@ -611,10 +606,9 @@ section.grain03 #contacto-left form .boton_contacto{
 }
 
 section.grain03 #contacto_right{
-    float: right;
-    width: 400px;
-    margin-top: 40px;
+    width: 190px;
     color: white;
+    padding: 30px 0 0 30px;
 }
 
 section.grain03 #contacto_right .contacto_right_main_text{
@@ -939,39 +933,30 @@ section.grain03 #contacto_right p{
 /*                                              */
 /************************************************/
 
-footer{
-    background: #171c1f url('../img/home_grain_bg.jpg') top center no-repeat;
-    height: 260px;
-    position: relative;
-    -webkit-box-shadow: inset 0px 17px 26px -2px rgba(0,0,0,0.3);
-    -moz-box-shadow: inset 0px 17px 26px -2px rgba(0,0,0,0.3);
-    box-shadow: inset 0px 17px 26px -2px rgba(0,0,0,0.3);
-}
 
-footer .dark_hover_footer{
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+footer{
+    position: relative;
     background-color: rgba(0,0,0,0.7);
+    height: auto;
 }
 
 #footer_wrapper{
-    position: absolute;
-    width: 1000px;
-    left: 50%;
-    margin-left: -500px;
+    min-height: 200px;
+    margin: auto;
+    max-width: 1000px;
     color: #bbb;
     font-size: 14px;
-    top: 30px;
     line-height: 28px;
+    padding: 30px 0 0 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
 #footer_wrapper .footer_col1{
     width: 245px;
-    float: left;
-    margin-left: 50px;
+    padding: 0 0 10px 15px;
 }
 
 #footer_wrapper .footer_col1 p:first-child,
@@ -982,34 +967,30 @@ footer .dark_hover_footer{
 
 #footer_wrapper .footer_col2{
     width: 125px;
-    float: left;
-    margin-left: 25px;
+
 }
 
 #footer_wrapper .footer_col3{
     width: 125px;
-    float: left;
-    margin-left: 25px;
 }
 
 #footer_wrapper .footer_col4{
     width: 360px;
-    float: right;
+    padding: 10px 0 0 40px;
 }
 
 #footer_wrapper .footer_col4 img{
-    float: left;
     margin: 0 6px 0 6px;
 }
 
 #footer_wrapper .footer_col4 .language{
-    float: right;
     margin-right: 20px;
     color: white;
 }
 
 #footer_wrapper .footer_col4 input[type="email"]{
-    width: 322px;
+    min-width: 100px;
+    width: auto;
     border: 6px solid #888;
     height: 24px;
     padding-left: 6px;
@@ -1310,8 +1291,6 @@ section{
 #request .requestsuccess img{
 	width: 176px;
 }
-
-
 
 
 
