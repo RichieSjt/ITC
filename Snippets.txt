@@ -1,0 +1,41 @@
+----------------------------------------------------------------
+    
+    "Competitive structure": {
+		"prefix": "competitive",
+		"body": [
+			"import java.util.Scanner;",
+			"",
+			"public class name {",
+			"\tpublic static void main(String[] args) {",
+			"\t\tScanner sc = new Scanner(System.in);",
+			"\t\tint i, testCases;",
+			"",
+			"\t\ttestCases = Integer.parseInt(sc.nextLine());",
+			"",
+			"\t\tfor(i = 0; i < testCases; i++){",
+			"",
+			"\t\t}",
+			"\t}",
+			"}",
+		],
+		"description": "Competitive structure of java program"
+	}
+
+----------------------------------------------------------------
+
+	"Basic structure": {
+		"prefix": "basicC",
+		"body": [
+			"#include <iostream>",
+			"using namespace std;",
+			"",
+			"int main() {",
+			"",
+			"return 0;",
+			"}",
+
+			],
+			"description": "Basic structure of a C++ program"
+		}
+
+----------------------------------------------------------------
