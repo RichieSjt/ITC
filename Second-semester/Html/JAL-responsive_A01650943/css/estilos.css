@@ -989,8 +989,8 @@ footer{
 }
 
 #footer_wrapper .footer_col4 input[type="email"]{
-    min-width: 100px;
-    width: auto;
+    max-width: 380px;
+    width: 100%;
     border: 6px solid #888;
     height: 24px;
     padding-left: 6px;
