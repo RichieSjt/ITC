@@ -22,7 +22,9 @@ public class Frog {
             }else if ((right == left) && (jumps % 2 != 0)){
                 result = (2 * right) - left;
                 System.out.println(result);
-            }else {
+            }else if ((right % 2 == 0) && (left % 2 != 0)){
+
+            }else{
                 for (j = 1; j <= jumps; j++) {
                     if (j % 2 == 0)
                         result -= left;
