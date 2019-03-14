@@ -18,21 +18,15 @@ public class Frog {
 
             if ((right == left) && (jumps % 2 == 0)){
                 result = right - left;
-                System.out.println(result);
             }else if ((right == left) && (jumps % 2 != 0)){
-                result = (2 * right) - left;
-                System.out.println(result);
-            }else if ((right % 2 == 0) && (left % 2 != 0)){
-
-            }else{
-                for (j = 1; j <= jumps; j++) {
-                    if (j % 2 == 0)
-                        result -= left;
-                    else
-                        result += right;
-                }
-                System.out.println(result);
+                result = right;
+            }else if (jumps % 2 == 0){
+                result = (right - left) * (jumps/2);
+            }else if (jumps % 2 != 0){
+                result = (right - left) * (jumps/2) + right;
             }
+
+            System.out.println(result);
             result = 0;
         }
     }
