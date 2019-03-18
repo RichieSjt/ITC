@@ -7,25 +7,31 @@
         
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
         
+        <link rel="stylesheet" href="css/jquery.bxslider.css">
         <link href="css/styles.css" rel="stylesheet">
+            
     </head>
     <body id="top">
         <header data-scroll-header></header>
         
-        <div class="mainbannercontainer">
-            <img src="img/banner-01.jpg">
+        <div class="slider">
+            <div><img src="img/banner-01.jpg"></div>
+            <div><img src="img/banner-02.jpg"></div>
+            <div><img src="img/banner-03.jpg"></div>
+            <div><img src="img/banner-04.jpg"></div>
+            <div><img src="img/banner-05.jpg"></div>
+            <div><img src="img/banner-06.jpg"></div>
         </div>
         <div class="menu">
             <div class="menu-left-block"><a href="#top" id="gotop"><img src="img/logo.jpg"></a></div>
             <div class="menu-center-block">
                 <img src="img/menu.svg" class="ham">
-                <nav>
+                <nav id = "displaymenu">
                     <a href="#top" class="bold" id="gohome">home</a><span class="divider">&nbsp;&nbsp;/&nbsp;</span>
                     <a href="#evidencia" data-scroll>evidencia</a><span class="divider">&nbsp;&nbsp;/&nbsp;</span>
                     <a href="#abrelosojos" data-scroll class="bold">abre los ojos</a><span class="divider">&nbsp;&nbsp;/&nbsp;</span>
                     <a href="#aliadasyaliados" data-scroll>aliadas y aliados</a><span class="divider">&nbsp;&nbsp;/&nbsp;</span>
-                    <a href="#quepuedeshacer" data-scroll class="bold">¿qué puedes hacer?</a>
-                    
+                    <a href="#quepuedeshacer" data-scroll class="bold">¿qué puedes hacer?</a>   
                 </nav>
             </div>
             <div class="menu-right-block">
@@ -325,6 +331,22 @@
             </div>
         </div>
         
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.bxslider.js"></script>
+        <script src="js/smooth-scroll.min.js"></script>
+        <script>
+            $('.slider').bxSlider();
+
+            $('.ham').on('click', function(){
+                $('#displaymenu').slideToggle();
+                $('.menu-right-block').slideToggle();
+            })
+            
+            var scroll = new SmoothScroll('a[href*="#"]', {
+                speed: 1500
+            });
+
+        </script>
         
     </body>
 </html>
