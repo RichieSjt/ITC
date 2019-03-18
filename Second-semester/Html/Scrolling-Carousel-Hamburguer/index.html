@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="css/jquery.bxslider.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Jquery test</title>
+</head>
+
+<body>
+    <header id="menu">
+
+        <img src="image/hamburguer.png">
+        <div id = "wrapper">
+            <a href="#jquery" id = "logo"><img src="image/logo.png"></a>
+            <ul type = "none">
+                <a href="#carousel-section"><li>Carousel</li></a> 
+                <a href="#test"><li>Test</li></a>
+                <a href="#"><li>Content</li></a>
+                <a href="#"><li>Image</li></a>
+            </ul>
+        </div>
+    
+    </header>
+
+    <section class = "text" id = "jquery">
+        <h1 class = "title">Jquery</h1>
+        <p class =  "paragraph">jQuery is a lightweight, "write less, do more", JavaScript library. 
+            The purpose of jQuery is to make it much easier to use JavaScript on your website. jQuery 
+            takes a lot of common tasks that require many lines of JavaScript code to accomplish, and 
+            wraps them into methods that you can call with a single line of code. jQuery also simplifies 
+            a lot of the complicated things from JavaScript, like AJAX calls and DOM manipulation.
+        </p>
+        <br><br>
+    </section>
+
+    <section id="carousel-section">
+        <h1 class = "title">Carousel</h1>
+        <div class="carousel">
+            <div><img src="image/carousel01.jpg"></div>
+            <div><img src="image/carousel02.jpg"></div>
+            <div><img src="image/carousel03.jpg"></div>
+            <div><img src="image/carousel04.jpg"></div>
+            <div><img src="image/carousel05.jpg"></div>
+        </div>
+
+        <br><br>
+    </section>
+
+    <section class="text" id = "test">
+        <h1 class = "title">This section is just a test</h1>
+        <p class = "paragraph">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius suscipit sunt assumenda? Sunt ea voluptatibus
+            eveniet voluptate nulla rem dolorem excepturi alias praesentium natus beatae molestiae vero, et tempore
+            adipisci.
+        </p>
+        <br><br>
+    </section>
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.bxslider.min.js"></script>
+    <script src="js/smooth-scroll.min.js"></script>
+
+    <script>
+        $('.carousel').bxSlider();
+        
+        $('.menu').on('click', function () {
+            $('#displaymenu').slideToggle();
+            $('.menu-right-block').slideToggle();
+        })
+
+        var scroll = new SmoothScroll('a[href*="#"]', {
+            speed: 300
+        });
+    </script>
+</body>
+
+</html>
