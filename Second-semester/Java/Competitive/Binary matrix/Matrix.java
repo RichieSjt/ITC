@@ -39,7 +39,7 @@ public class Matrix {
 
     }
     public static int sumColumn(String column, int matrixSize){
-        //for(i = 0; )
+        int i = 0;
         return i;
     }
 } 
