@@ -1,11 +1,21 @@
 public class Demo {
     public static void main(String[] args) {
-        MoralPerson mp = new MoralPerson();
+        String rfc, curp;
 
+        MoralPerson mp = new MoralPerson();
         mp.setBirthDate("29/11/2012");
         mp.setCompanyName("Instituto Tecnologico Estudios Superiores Monterrey");
-        String rfc = mp.calculateRFC();
+        rfc = mp.calculateRFC().toUpperCase();
+        System.out.println("Moral person " + mp.getCompanyName() + " rfc: "+ rfc);
 
-        System.out.println(rfc);
+        PhysicalPerson pp = new PhysicalPerson();
+        pp.setBirthDate("21/03/1981");
+        pp.enterData("Carlos", "Flores", "Perez", "DF", "Male");
+        rfc = pp.calculateRFC().toUpperCase();
+        curp = pp.calculateCURP().toUpperCase();
+        System.out.println("Physical person " + pp.getName() + " rfc: "+ rfc);
+        System.out.println("Physical person " + pp.getName() + " curp: "+ curp);
+
+
     }
 }
