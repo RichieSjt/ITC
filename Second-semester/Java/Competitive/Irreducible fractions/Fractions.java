@@ -1,28 +1,42 @@
-import java.util.Scanner;
+    import java.util.Scanner;
 
-public class Fractions {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int i, input, counter = 0;
+    public class Fractions {
+        public static void main(String[] args) {
+            Scanner sc = new Scanner(System.in);
+            int gcd, number, i, j, counter = 1;
 
-        do{ 
-            input = Integer.parseInt(sc.nextLine());
+            do{
+            
+            number = Integer.parseInt(sc.nextLine());
+            if(number == 0)
+                break;
+            
+            int[] nums = new int[number];
+            
+            for(i = 2; i < number; i++) {
+                if (nums[i] == 1)
+                    continue;
 
-            for(i = 1; i < input; i++){
-                if(gcd(i, input) == 1){
+                gcd = gcd(i, number);
+                if(gcd == 1)
                     counter++;
+                else {
+                    j = i; 
+                    do{
+                        nums[j] = 1;
+                        j += i;
+                    }while(j < number);
                 }
             }
             System.out.println(counter);
-            counter = 0;
-        }while(input != 0);
-        
-    }
-    public static int gcd(int n, int m){
-        if(m==0){
-            return n;
-        }else{
-            return gcd(m, n%m);
+            counter = 1;
+            }while(number != 0);
+        }
+        public static int gcd(int n, int m){
+            if(m==0){
+                return n;
+            }else{
+                return gcd(m, n%m);
+            }
         }
     }
-}

@@ -16,26 +16,24 @@ public class Vova {
         elements = sc.nextLine();
         heaters = elements.split(" ");
 
-        for(i = 0; i < numberOfElements; i++){
-            if (heaters[i].equals("0"))
-                heaters[i] = "2"; 
-        }
-
         for(i = 0; i < numberOfElements; i++) {
             if(heaters[i].equals("1")){
                 heatLeft = i - heaterRange + 1;
                 heatRight = i + heaterRange - 1;
-                if(heatLeft < 0 /*&& heaters[i] != 1*/ ){
+
+                if(heatLeft < 0 && heaters[heatRight].equals("1")){
+                    counter--;
+                }else if(heatLeft < 0 && !heaters[heatRight].equals("1")){
                     for(j = 0; j <= heatRight; j++ ){
-                        heaters[j] = "0";
+                        heaters[j] = "2";
                     }
                 }else if(heatRight >= numberOfElements){
                     for(j = heatLeft; j < numberOfElements; j++ ){
-                        heaters[j] = "0";
+                        heaters[j] = "2";
                     }
                 }else{
                     for(j = heatLeft; j <= heatRight; j++){
-                        heaters[j] = "0";
+                        heaters[j] = "2";
                     }
                 }
                 counter++;
@@ -43,7 +41,7 @@ public class Vova {
         }
 
         for(i = 0; i < numberOfElements; i++) {
-            if (heaters[i].equals("2"))
+            if (heaters[i].equals("0"))
                 check = "-1";
         }
 
