@@ -33,10 +33,12 @@
             }while(number != 0);
         }
         public static int gcd(int n, int m){
-            if(m==0){
-                return n;
-            }else{
-                return gcd(m, n%m);
+            int tmp;
+            while (m != 0) {
+                tmp = m;
+                m = n%m; 
+                n = tmp;
             }
+            return n;
         }
-    }
+    }   
