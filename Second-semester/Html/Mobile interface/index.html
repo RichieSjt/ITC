@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Mobile</title>
+</head>
+<body>
+    <div id = "screen1">
+        <span data = '#screen2'>NEXT</span>
+        <h1>1</h1>
+    </div>
+    <div id = "screen2">
+        <span data = '#screen3'>NEXT</span>
+        <h1>2</h1>
+    </div>
+    <div id = "screen3">
+        <span data = '#screen4'>NEXT</span>
+        <h1>3</h1>
+    </div>
+    <div id = "screen4">
+        <span data = '#screen1'>NEXT</span>
+        <h1>4</h1>
+    </div>
+
+    <script src = "js/jquery-3.3.1.min.js"></script>
+
+    <script>
+        $('span').on('click', function(){
+            var screen = $(this).attr('data');
+            $('div').hide();
+            $(screen).show();
+        }); 
+    </script>
+</body>
+</html>
