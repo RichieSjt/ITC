@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Local Storage</title>
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/store.everything.min.js"></script>
+
+    <style>
+        .foco {
+            width: 150px;
+            height: 300px;
+            background-color: #ccc;
+            text-align: center;
+            font-family: sans-serif;
+            border-radius: 10px;
+        }
+
+        .bulb {
+            width: 150px;
+            height: 150px;
+            background: url('img/lightbulb-off.png');
+        }
+
+        .switch {
+            width: 150px;
+            height: 75px;
+            background: url('img/sprite.jpg');
+            background-size: 100%;
+            background-position: 0 100%;
+            cursor: pointer;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <div class="foco">
+        <div class="bulb"></div>
+        <div class="switch"></div>
+        <h1>Cocina</h1>
+    </div>
+
+    <script>
+        if (store.get("lightbulb") == undefined) {
+            store.set("lightbulb", "OFF");
+        }else if (store.get("lightbulb") == "ON"){
+            $('.bulb').css('background', 'url(img/lightbulb-on.png)');
+            $('.switch').css('background-position', '0 0');
+            store.set("lightbulb", "ON");
+        }
+
+        $('.switch').on('click', function () {
+            if (store.get("lightbulb") == "OFF") {
+                $('.bulb').css('background', 'url(img/lightbulb-on.png)');
+                $('.switch').css('background-position', '0 0');
+                store.set("lightbulb", "ON");
+            } else {
+                $('.bulb').css('background', 'url(img/lightbulb-off.png)');
+                $('.switch').css('background-position', '0 100%');
+                store.set("lightbulb", "OFF");
+            }
+
+        });
+    </script>
+
+</body>
+
+</html>

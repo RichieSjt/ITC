@@ -2,6 +2,8 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <title>IDF | Exercise</title>
         <script src="js/jquery-3.1.1.min.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Yantramanav:100,300,500,700,900" rel="stylesheet">
@@ -11,7 +13,7 @@
         <header>
             <div id="header-wrapper">
                 <p class="main-title">idf|a06</p>
-                <img src="img/menu.png" id="menu">
+                <a href = "#."><img src="img/menu.png" id="menu"></a>
                 <ul>
                     <li>What is UX?</li>
                     <li>Roles</li>
@@ -27,11 +29,15 @@
             
             <div class="keypoints">
                 <img src="img/circles.png">
-                <a href="#." class="key-1" id="i1"><span>Browse<br>websites</span></a>
-                <a href="#." class="key-2" id="i2"><span>User<br>tests</span></a>
-                <a href="#." class="key-3" id="i3"><span>Mobile<br>versions</span></a>
-                <a href="#." class="key-4" id="i4"><span>Responsive<br>design</span></a>
-                <a href="#." class="key-5" id="i5"><span>Research<br>for<br>knowledge</span></a>
+                <div id = "top">
+                    <a href="#." class="key" id="i1" data-sec="#item-1"><span>Browse<br>websites</span></a>
+                    <a href="#." class="key" id="i2" data-sec="#item-2"><span>User<br>tests</span></a>
+                    <a href="#." class="key" id="i3" data-sec="#item-3"><span>Mobile<br>versions</span></a>
+                </div>
+                <div id = "bottom">
+                    <a href="#." class="key" id="i4" data-sec="#item-4"><span>Responsive<br>design</span></a>
+                    <a href="#." class="key" id="i5" data-sec="#item-5"><span>Research<br>for<br>knowledge</span></a>
+                </div>
             </div>
             
             <div class="aside" id="item-1">
@@ -54,15 +60,36 @@
                 <div class="aside-title">Research for knowledge</div>
                 <div class="aside-text">Praesent sollicitudin velit ut enim scelerisque ultrices. Nullam auctor purus sit amet leo sodales, at tincidunt ipsum elementum.<br> Duis commodo lorem sed velit sollicitudin, ac vulputate quam maximus.<br> Cras eu augue eget purus ultricies bibendum ac sed enim. Cras vel mattis velit, a finibus dolor.<br> Cras iaculis arcu sed varius venenatis. Donec varius neque sagittis eros dignissim, vitae placerat purus ornare. Curabitur eget viverra dolor. Aliquam erat volutpat.</div>
             </div>
+            <br><br>
         </section>
         
         <script>
-        $('#menu').on('click', function(){
-            $('ul').slideToggle();
-            $('.menu-right-block').slideToggle();
-        });
+            var active = "false";
+            $('#menu').on('click', function(){
+                if(active == "false"){
+                    $('header').css('height', '255px');
+                    $('ul').fadeIn();
+                    active = "true";
+                }else{
+                    $('header').css('height', '50px');
+                    $('ul').hide();
+                    active = "false";
+                }
+                
+            });
 
-        
+            var display = "#item-1";
+            var color = '#i1';
+
+            $('.key').on('click', function(){
+                $(display).fadeOut();
+                display = $(this).attr("data-sec");
+                $(display).delay(300).fadeIn();
+
+                $(color).css('background-color', '#FFFFFF');
+                color = '#' + $(this).attr("id");
+                $(color).css('background-color', '#8fd700');
+            });
         </script>
     </body>
 </html>

@@ -161,32 +161,32 @@ section .tagline{
     background-color: #8fd700 !important;
 }
 
-.keypoints .key-1{ 
+.keypoints #i1{ 
     position: absolute;
     top: 187px;
     left: 3px;
     background-color: #8fd700;
 }
 
-.keypoints .key-2{ 
+.keypoints #i2{ 
     position: absolute;
     top: 300px;
     left: 165px;
 }
 
-.keypoints .key-3{ 
+.keypoints #i3{ 
     position: absolute;
     top: 170px;
     left: 299px;
 }
 
-.keypoints .key-4{ 
+.keypoints #i4{ 
     position: absolute;
     top: 18px;
     left: 443px;
 }
 
-.keypoints .key-5{ 
+.keypoints #i5{ 
     position: absolute;
     top: 76px;
     left: 625px;
@@ -223,10 +223,55 @@ section .aside#item-5{
 }
 
 @media screen and (max-width: 1000px) {
+    
     #header-wrapper ul{
         display: none;
+        max-width: 142px;
+        width: 100%;
+        float: left;
+        margin-top: 45px;
     }
-    #header-wrapper #menu{
+    #header-wrapper #menu{  
         display: block;
+    }
+    .keypoints img{
+        display: none;
+    }
+    #top{
+        display: flex;
+        flex-direction: row;
+    }
+    #bottom{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+    .keypoints a{
+        border-radius: 0%;
+        max-width: inherit;
+        width: 100%;
+        height: auto;
+    }
+    section .aside{ 
+        position: static;
+        max-width: 1000px;
+        width: 100%;
+    }
+    #header-wrapper .main-title {padding-left: 15px;}
+    section .title {padding:0 10px 0 10px; margin-top: 40px; }
+    section .tagline {padding:0 10px 0 10px;}
+    section .aside-title { padding-left: 15px; }
+    section .aside-text { padding: 15px; }
+
+    .keypoints #i1, .keypoints #i2, .keypoints #i3, .keypoints #i4, .keypoints #i5 { 
+        position: static; float: left;
+    }
+    .keypoints{
+        height: auto;
+        max-width: 1000px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 80px;
     }
 }
