@@ -29,15 +29,11 @@
             
             <div class="keypoints">
                 <img src="img/circles.png">
-                <div id = "top">
-                    <a href="#." class="key" id="i1" data-sec="#item-1"><span>Browse<br>websites</span></a>
-                    <a href="#." class="key" id="i2" data-sec="#item-2"><span>User<br>tests</span></a>
-                    <a href="#." class="key" id="i3" data-sec="#item-3"><span>Mobile<br>versions</span></a>
-                </div>
-                <div id = "bottom">
-                    <a href="#." class="key" id="i4" data-sec="#item-4"><span>Responsive<br>design</span></a>
-                    <a href="#." class="key" id="i5" data-sec="#item-5"><span>Research<br>for<br>knowledge</span></a>
-                </div>
+                <a href="#." class="key" id="i1" data-sec="#item-1"><span>Browse<br>websites</span></a>
+                <a href="#." class="key" id="i2" data-sec="#item-2"><span>User<br>tests</span></a>
+                <a href="#." class="key" id="i3" data-sec="#item-3"><span>Mobile<br>versions</span></a>
+                <a href="#." class="key" id="i4" data-sec="#item-4"><span>Responsive<br>design</span></a>
+                <a href="#." class="key" id="i5" data-sec="#item-5"><span>Research<br>for<br>knowledge</span></a>
             </div>
             
             <div class="aside" id="item-1">
@@ -66,16 +62,7 @@
         <script>
             var active = "false";
             $('#menu').on('click', function(){
-                if(active == "false"){
-                    $('header').css('height', '255px');
-                    $('ul').fadeIn();
-                    active = "true";
-                }else{
-                    $('header').css('height', '50px');
-                    $('ul').hide();
-                    active = "false";
-                }
-                
+                $('#header-wrapper ul').slideToggle();
             });
 
             var display = "#item-1";
