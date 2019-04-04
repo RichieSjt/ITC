@@ -59,14 +59,18 @@
             $('#less').on('click', function(){
                 if(counter < 1)
                     counter = 1;
-                else
-                    $('.number-of-batteries').text("x" + counter--);
+                else{
+                    counter--;
+                    $('.number-of-batteries').text("x" + counter);
+                }
             });
             $('#more').on('click', function(){
                 if(counter > 9)
                     counter = 9;
-                else
-                    $('.number-of-batteries').text("x" + counter++);
+                else{
+                    counter++;
+                    $('.number-of-batteries').text("x" + counter);
+                }
             });
             $('#buy').on('click', function(){
                 $('#options').hide();
@@ -76,7 +80,7 @@
                 case "#img-phantom2": drone = 2000; break;
                 case "#img-phantom3": drone = 3000; break;
                 }
-                drone += counter * 100 - 100;
+                drone += counter * 100;
                 $('#total').text(drone);
             });
         </script>
