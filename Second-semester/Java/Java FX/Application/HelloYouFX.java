@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.Scene;
@@ -27,9 +28,13 @@ public class HelloYouFX extends Application{
         pane.add(txtAge,1,1);
 
         Button bttnClick=new Button("Click");
-        HandleClick handler = new HandleClick();
-        handler.setTxtName(txtName); 
-        bttnClick.addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
+        bttnClick.addEventFilter(MouseEvent.MOUSE_CLICKED,
+        new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event){
+                System.out.println("Hello " + txtName.getText());
+                System.out.println("You are " + txtAge.getText() + " years old");    
+            }
+        });
         pane.add(bttnClick,1,2);
 
         Scene scene=new Scene(pane);
@@ -40,5 +45,4 @@ public class HelloYouFX extends Application{
     public static void main(String[] args) {
         launch(args);
     }
-
 }
