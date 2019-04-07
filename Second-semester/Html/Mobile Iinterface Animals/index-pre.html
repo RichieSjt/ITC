@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile interface</title>
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    <link href="css/cssreset.css" rel="stylesheet">
+    <link href="css/estilos.css" rel="stylesheet">
+    <script src="js/jquery-3.1.1.min.js"></script>
+</head>
+
+<body>
+    <section id="slide1">
+        <h1>Start</h1>
+
+
+        <div class="item">Hombre</div>
+        <div class="item">Mujer</div>
+
+
+
+        <div class="next">Next</div>
+        <div class="error">Please select an option</div>
+    </section>
+    <section id="slide2">
+        <h1>2</h1>
+        <ul>
+            <li class="animal">Perro</li>
+            <li class="animal">Gato</li>
+        </ul>
+    </section>
+    <section id="slide3">
+        <h1>3</h1>
+        <ul>
+            <li>Amarillo</li>
+            <li>Verde</li>
+        </ul>
+    </section>
+    <section id="slide4">
+        <h1>Resultados</h1>
+        <div class="res">Tus resultados son:
+            <p class="resultado"></p>
+        </div>
+    </section>
+
+    <script>
+        $('.item').on('click', function () {
+            $('.item').removeClass('selected');
+            $(this).addClass('selected');
+        });
+    </script>
+</body>
+
+</html>

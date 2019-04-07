@@ -1,0 +1,116 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    font-family: 'Lobster', sans-serif;
+}
+
+section{
+    width: 100vw;
+    height: 100vh;
+    float: left;
+}
+
+#slide1{
+    background-color: darkseagreen;
+}
+
+.error, .res{
+    color: floralwhite;
+    font-size: 30px;
+    text-align: center;
+}
+
+
+#slide2{
+    background-color: darkslategrey;
+}
+
+
+#slide3{
+    background-color: dodgerblue;
+}
+
+#slide4{
+    background-color: coral;
+}
+
+.next{
+    width: 60%;
+    text-align: center;
+    font-size: 40px;
+    margin: 50px auto;
+    height: 80px;
+    background-color: darkmagenta;
+    color: white;
+    line-height: 80px;
+    border-radius: 10px;
+}
+
+h1{
+    text-align: center;
+    font-size: 50px;
+    padding: 40px;
+    color: white;
+}
+
+.item, li{
+    width: 60%;
+    text-align: center;
+    font-size: 40px;
+    margin: 50px auto;
+    height: 80px;
+    background-color: azure;
+    line-height: 80px;
+    border-radius: 10px;
+}
+
+.selected{
+    box-shadow: 0 0 6px 4px deeppink;
+}
+
+.error{
+    display: none;
+}
+
+
+#sprite{
+    width: 100px;
+    height: 373px;
+    border: 4px solid black;
+    background-image: url('../img/lipsticks.jpg');
+    background-size: 500px auto;
+
+}
+
+#slide2, #slide3, #slide4{
+    display: none;
+}
+.selected{
+    box-shadow: 0 0 6px 4px deeppink;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
