@@ -10,6 +10,8 @@ import javafx.scene.input.MouseEvent;
 
 public class MagicSquare extends Application{
     public void start(Stage stage) throws Exception{
+        int i;
+        TextField[] textFields = new TextField[9];
 
         //Stage settings
         stage.setTitle("Magic square");
@@ -26,9 +28,25 @@ public class MagicSquare extends Application{
         TextField t7 = new TextField();
         TextField t8 = new TextField();
         TextField t9 = new TextField();
+        /*
+        for(i = 0; i < 9; i++){
+            textFields[i].setAlignment(Pos.CENTER);
+        }*/
+
         Label result = new Label("Result");
         Button reset = new Button("Reset");
         Button check = new Button("Check");
+
+        //Textfields to array
+        textFields[0] = t1;
+        textFields[1] = t2; 
+        textFields[2] = t3;
+        textFields[3] = t4;
+        textFields[4] = t5;
+        textFields[5] = t6;
+        textFields[6] = t7;
+        textFields[7] = t8;
+        textFields[8] = t9;
 
         GridPane pane=new GridPane();
         //Vertical and horizontal gaps between columns
@@ -56,19 +74,30 @@ public class MagicSquare extends Application{
         check.addEventFilter(MouseEvent.MOUSE_CLICKED,
         new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event){
-                String r, numbers = "";
+                String r = "";
+                boolean isMagic;
+                int constant;
 
-                numbers += t1.getText() + " ";
-                numbers += t2.getText() + " ";
-                numbers += t3.getText() + " ";
-                numbers += t4.getText() + " ";
-                numbers += t5.getText() + " ";
-                numbers += t6.getText() + " ";
-                numbers += t7.getText() + " ";
-                numbers += t8.getText() + " ";
-                numbers += t9.getText();
+                int n1 = Integer.parseInt(t1.getText());
+                int n2 = Integer.parseInt(t2.getText());
+                int n3 = Integer.parseInt(t3.getText());
+                int n4 = Integer.parseInt(t4.getText());
+                int n5 = Integer.parseInt(t5.getText());
+                int n6 = Integer.parseInt(t6.getText());
+                int n7 = Integer.parseInt(t7.getText());
+                int n8 = Integer.parseInt(t8.getText());
+                int n9 = Integer.parseInt(t9.getText());
+                
+                //Rows check
+                constant = n1 + n2 + n3;
+                isMagic = constant == n4 + n5 + n6;
+                isMagic &= constant == n7 + n8 + n9;
+                //Columns check
+                isMagic &= constant == n1 + n4 + n7;
+                isMagic &= constant == n2 + n5 + n8;
+                isMagic &= constant == n3 + n6 + n9;
 
-                r = magic(numbers);
+                r = isMagic ? "It is a magic square" : "It is not a magic square"; 
                 result.setText(r);
             }
         });
@@ -76,15 +105,10 @@ public class MagicSquare extends Application{
         reset.addEventFilter(MouseEvent.MOUSE_CLICKED,
         new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event){
-                t1.setText("");
-                t2.setText("");
-                t3.setText("");
-                t4.setText("");
-                t5.setText("");
-                t6.setText("");
-                t7.setText("");
-                t8.setText("");
-                t9.setText("");
+                int i; 
+                for(i = 0; i < 9; i++)
+                    textFields[i].setText("");
+                result.setText("Result");
             }
         });
         
@@ -96,34 +120,5 @@ public class MagicSquare extends Application{
     }
     public static void main(String[] args) {
         launch(args);
-    }
-
-    public static String magic(String numbers){
-        String result;
-        int constant, i;
-        boolean isMagic;
-        String[] num;
-        int[] numInt = new int[9];
-        if (numbers.equals("        "))
-            result = "Please fill the square";
-        else{
-            num = numbers.split(" ");
-            for (i = 0; i < num.length; i++){
-                numInt[i] = Integer.parseInt(num[i]);
-            }
-
-            //Rows check
-            constant = numInt[0] + numInt[1] + numInt[2];
-            isMagic = constant == numInt[3] + numInt[4] + numInt[5];
-            isMagic &= constant == numInt[6] + numInt[7] + numInt[8];
-
-            //Columns check
-            isMagic &= constant == numInt[0] + numInt[3] + numInt[6];
-            isMagic &= constant == numInt[1] + numInt[4] + numInt[7];
-            isMagic &= constant == numInt[2] + numInt[5] + numInt[8];
-
-            result = isMagic ? "It is a magic square" : "It is not a magic square";
-        }
-        return result;
     }
 }

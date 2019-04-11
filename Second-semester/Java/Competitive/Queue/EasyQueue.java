@@ -13,12 +13,11 @@ public class EasyQueue {
 
         for(i = 0; i < testCases; i++){
             input = sc.nextLine();
-            if(input.substring(0, 1).equals("1"))
-                q.add(input.substring(2));
-            else if(input.substring(0, 1).equals("2"))
-                q.remove();
-            else
-                System.out.println(q.isEmpty() ? "Empty!" : q.element()); 
+            switch(input.substring(0, 1)){
+                case "1": q.add(input.substring(2)); break;
+                case "2": q.remove(); break;
+                case "3": System.out.println(q.isEmpty() ? "Empty!" : q.element()); break;
+            }
         } 
     }
 }
