@@ -16,7 +16,7 @@ public class MagicSquare extends Application{
         //Stage settings
         stage.setTitle("Magic square");
         stage.setWidth(550);
-        stage.setHeight(300);
+        stage.setHeight(400);
 
         //Pane elements
         TextField t1 = new TextField();
@@ -28,11 +28,6 @@ public class MagicSquare extends Application{
         TextField t7 = new TextField();
         TextField t8 = new TextField();
         TextField t9 = new TextField();
-        /*
-        for(i = 0; i < 9; i++){
-            textFields[i].setAlignment(Pos.CENTER);
-        }*/
-
         Label result = new Label("Result");
         Button reset = new Button("Reset");
         Button check = new Button("Check");
@@ -47,14 +42,17 @@ public class MagicSquare extends Application{
         textFields[6] = t7;
         textFields[7] = t8;
         textFields[8] = t9;
+        //Setting text fields measures
+        for(i = 0; i < 9; i++){
+            textFields[i].setPrefWidth(130);
+            textFields[i].setPrefHeight(55);
+        }
 
-        GridPane pane=new GridPane();
-        //Vertical and horizontal gaps between columns
+        GridPane pane = new GridPane();
+        //Grid styling
         pane.setHgap(10);
         pane.setVgap(10);
-        //Grid alignment
         pane.setAlignment(Pos.CENTER);
-        //Padding
         pane.setPadding(new Insets(10, 10, 10, 10));
 
         //Adding components to the grid
@@ -76,32 +74,28 @@ public class MagicSquare extends Application{
             public void handle(MouseEvent event){
                 String r = "";
                 boolean isMagic;
-                int constant;
+                int constant, i;
+                int[] n = new int[9];
 
-                int n1 = Integer.parseInt(t1.getText());
-                int n2 = Integer.parseInt(t2.getText());
-                int n3 = Integer.parseInt(t3.getText());
-                int n4 = Integer.parseInt(t4.getText());
-                int n5 = Integer.parseInt(t5.getText());
-                int n6 = Integer.parseInt(t6.getText());
-                int n7 = Integer.parseInt(t7.getText());
-                int n8 = Integer.parseInt(t8.getText());
-                int n9 = Integer.parseInt(t9.getText());
-                
+                //Obtaining numbers
+                for(i = 0; i < 9; i++){
+                    n[i] = Integer.parseInt(textFields[i].getText());
+                }
                 //Rows check
-                constant = n1 + n2 + n3;
-                isMagic = constant == n4 + n5 + n6;
-                isMagic &= constant == n7 + n8 + n9;
+                constant = n[0] + n[1] + n[2];
+                isMagic = constant == n[3] + n[4] + n[5];
+                isMagic &= constant == n[6] + n[7] + n[8];
                 //Columns check
-                isMagic &= constant == n1 + n4 + n7;
-                isMagic &= constant == n2 + n5 + n8;
-                isMagic &= constant == n3 + n6 + n9;
+                isMagic &= constant == n[0] + n[3] + n[6];
+                isMagic &= constant == n[1] + n[4] + n[7];
+                isMagic &= constant == n[2] + n[5] + n[8];
+                r = isMagic ? "It is a magic square" : "It is not a magic square";
 
-                r = isMagic ? "It is a magic square" : "It is not a magic square"; 
                 result.setText(r);
             }
         });
 
+        //Text fields reset
         reset.addEventFilter(MouseEvent.MOUSE_CLICKED,
         new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event){

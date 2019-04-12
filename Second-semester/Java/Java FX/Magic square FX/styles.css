@@ -1,0 +1,10 @@
+.root {
+    -fx-padding: 20;
+    -fx-alignment: center;
+}
+.text-field {
+    -fx-alignment: center;
+}
+.button {
+    -fx-alignment: center;
+}
