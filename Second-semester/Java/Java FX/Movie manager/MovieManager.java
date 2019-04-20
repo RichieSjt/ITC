@@ -1,16 +1,18 @@
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets; 
-import javafx.geometry.Pos;
 import javafx.stage.Stage;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.Scene;
+import javafx.scene.layout.*;
 import javafx.scene.control.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 public class MovieManager extends Application{
+	private ObservableList<Movie> data;
+    private ListView<Movie> lvMovie;
+    private TextField title, duration, director, year, classification;
+    
     public void start(Stage stage) throws Exception{
 
         //Stage settings
@@ -19,18 +21,18 @@ public class MovieManager extends Application{
         stage.setHeight(600);
 
         BorderPane mainPane = new BorderPane();
-        GridPane moviePane = new GridPane();
         FlowPane contentPane = new FlowPane();
         FlowPane controlsPane = new FlowPane();
-
+        GridPane moviePane = new GridPane();
         mainPane.setCenter(contentPane);
-        mainPane.setBottom(controlsPane);
+        mainPane.setBottom(controlsPane);        
+        contentPane.getChildren().add(moviePane);
 
-        TextField title = new TextField();
-        TextField director = new TextField();
-        TextField duration = new TextField();
-        TextField year = new TextField();
-        TextField classification = new TextField();
+        title = new TextField();
+        director = new TextField();
+        duration = new TextField();
+        year = new TextField();
+        classification = new TextField();
         
         Label lblTitle = new Label("Title:");
         Label lblDirector = new Label("Director:");
@@ -54,11 +56,29 @@ public class MovieManager extends Application{
         moviePane.add(lblClassification, 0, 4);
         moviePane.add(classification, 1, 4);
 
+        //List
+		data = FXCollections.observableArrayList();
+		lvMovie = new ListView<>(data);
+		contentPane.getChildren().add(lvMovie);
+
         //Bottom content
         controlsPane.getChildren().add(add); 
         controlsPane.getChildren().add(delete);
         controlsPane.getChildren().add(save);
-        
+
+        add.addEventFilter(MouseEvent.MOUSE_CLICKED,
+        new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e){
+                addMovie();
+            }
+        });
+
+        delete.addEventFilter(MouseEvent.MOUSE_CLICKED,
+        new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e){
+                deleteMovie();
+            }
+        });
         
         Scene scene = new Scene(mainPane);
         stage.setScene(scene);
@@ -67,5 +87,26 @@ public class MovieManager extends Application{
     }
     public static void main(String[] args) {
         launch(args);
+    }
+    private void addMovie(){
+        Movie m = new Movie();
+        //Set attributes
+        m.setTitle(title.getText());
+        m.setDirector(director.getText());
+        m.setDuration(duration.getText()); 
+        m.setYear(year.getText());
+        m.setClassification(classification.getText());
+        //Add object to list
+        data.add(m);
+        //Clear form
+        title.setText("");
+        director.setText("");
+        duration.setText("");
+        year.setText("");
+        classification.setText("");
+    }
+    private void deleteMovie(){
+        Movie m = lvMovie.getSelectionModel().getSelectedItem();
+        data.remove(m);
     }
 }
