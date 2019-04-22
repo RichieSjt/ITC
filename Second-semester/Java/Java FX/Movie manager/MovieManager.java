@@ -79,6 +79,13 @@ public class MovieManager extends Application{
                 deleteMovie();
             }
         });
+
+        lvMovie.addEventFilter(MouseEvent.MOUSE_CLICKED,
+        new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e){
+                movieData();
+            }
+        });
         
         Scene scene = new Scene(mainPane);
         stage.setScene(scene);
@@ -108,5 +115,18 @@ public class MovieManager extends Application{
     private void deleteMovie(){
         Movie m = lvMovie.getSelectionModel().getSelectedItem();
         data.remove(m);
+        title.setText("");
+        director.setText("");
+        duration.setText("");
+        year.setText("");
+        classification.setText("");
+    }
+    private void movieData(){
+        Movie m = lvMovie.getSelectionModel().getSelectedItem();
+        title.setText(m.getTitle());
+        duration.setText(m.getDuration());
+        director.setText(m.getDirector());
+        year.setText(m.getYear());
+        classification.setText(m.getClassification());
     }
 }
