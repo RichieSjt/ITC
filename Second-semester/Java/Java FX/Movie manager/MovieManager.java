@@ -96,21 +96,30 @@ public class MovieManager extends Application{
         launch(args);
     }
     private void addMovie(){
-        Movie m = new Movie();
-        //Set attributes
-        m.setTitle(title.getText());
-        m.setDirector(director.getText());
-        m.setDuration(duration.getText()); 
-        m.setYear(year.getText());
-        m.setClassification(classification.getText());
-        //Add object to list
-        data.add(m);
-        //Clear form
-        title.setText("");
-        director.setText("");
-        duration.setText("");
-        year.setText("");
-        classification.setText("");
+        try {
+            Movie m = new Movie();
+            //Set attributes
+            m.setTitle(title.getText());
+            m.setDirector(director.getText());
+            m.setDuration(duration.getText()); 
+            m.setYear(year.getText());
+            m.setClassification(classification.getText());
+            //Add object to list
+            data.add(m);
+            //Clear form
+            title.setText("");
+            director.setText("");
+            duration.setText("");
+            year.setText("");
+            classification.setText("");
+        }catch (EmptyFieldException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Add a movie");
+            alert.setHeaderText("Error while adding a movie");
+            alert.setContentText(e.getMessage());
+
+            alert.showAndWait();
+        }
     }
     private void deleteMovie(){
         Movie m = lvMovie.getSelectionModel().getSelectedItem();

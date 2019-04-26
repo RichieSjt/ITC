@@ -21,7 +21,9 @@ public class Movie {
 		return m != null && m.title.equals(this.title);
 	}
 	
-	public void setTitle(String title) {
+	public void setTitle(String title) throws EmptyFieldException{
+		if (title == null || title.length() == 0)
+			throw new EmptyFieldException ("The title cannot be null");
 		this.title = title;
 	}
 	
