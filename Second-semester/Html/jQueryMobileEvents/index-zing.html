@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mobile events</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background-color: #ddd;
+            font-family: 'Raleway', sans-serif;
+        }
+        
+        section{
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        #taparea,
+        #taparea2{
+            width: 80vw;
+            margin-left: 10vw;
+            background-color: white;
+            border: 1px solid #999;
+            height: 80vw;
+            margin-bottom: 60px;
+            position: relative;
+            top: 40px;
+        }
+        
+        p{
+            padding: 10px;
+            text-align: center;
+            font-size: 26px;
+            margin-top: 20px;
+        }
+        
+        #gesture,
+        #gesture2{
+            width: 80vw;
+            height: 50px;
+            background-color: white;
+            opacity: 0.8;
+            border: 1px solid rgba(0,0,0,0.3);
+            margin-left: 10vw;
+            text-align: center;
+        }
+        
+        #save{
+            width: 80vw;
+            height: 50px;
+            background-color: white;
+            opacity: 0.8;
+            border: 1px solid rgba(0,0,0,0.3);
+            margin-left: 10vw;
+            text-align: center;
+            line-height: 50px;
+            font-size: 30px;
+            background-color: aquamarine;
+            margin-top: 30px;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        #skip{
+            width: 80vw;
+            height: 50px;
+            background-color: white;
+            opacity: 0.8;
+            border: 1px solid rgba(0,0,0,0.3);
+            margin-left: 10vw;
+            text-align: center;
+            line-height: 50px;
+            font-size: 30px;
+            background-color: aquamarine;
+            margin-top: 30px;
+        }
+        
+        .dot, .hyphen{
+            background-color: #444;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 18px 5px 0 5px;
+        }
+        
+        .hyphen{
+            width: 38px;
+            border-radius: 4px;
+        }
+        #s2{
+            display: none;
+            background-color: #2dc6c6;
+        }
+        
+    </style> 
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js"  integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+  crossorigin="anonymous"></script>
+    <script src="zingtouch.min.js"></script>
+    <script src="store.everything.min.js"></script>
+    
+</head>
+<body>
+    
+    
+    <section>
+        <div id="taparea">
+            
+        </div>
+        <p>Tap your gesture</p>
+        <div id="gesture">
+            
+        </div>
+        <div id="save">
+            SAVE PATTERN
+        </div>
+        <div id="skip">
+            TEST PATTERN
+        </div>
+    </section>
+    <section id="s2">
+        <div id="taparea2">
+            
+        </div>
+        <p>Enter your gesture</p>
+        <div id="gesture2">
+            
+        </div>
+    </section>
+    
+    
+    <script>
+        
+        
+        var dot = "<div class='dot'></div>";
+        var hyphen = "<div class='hyphen'></div>";
+        
+        
+        
+        var tot = 0;
+        var tot2 = 0;
+        var pattern = "";
+        var pattern2 = "";
+        
+        var touchArea = document.getElementById('taparea');
+        var touchArea2 = document.getElementById('taparea2');
+        var myRegion = ZingTouch.Region(touchArea);
+        var myRegion2 = ZingTouch.Region(touchArea2);
+        
+        var gest = new ZingTouch.Tap({
+            maxDelay: 1000,
+            numInputs: 1,
+            tolerance: 10
+        });
+        
+        if(store.get('tot-patterns')==null){
+            store.set('tot-patterns',0);
+        }
+
+        myRegion.bind(touchArea, gest, function(e){
+            var num = e.detail.interval;
+            
+            tot++;
+            
+            if(tot <= 5){
+                if(num < 50){
+                    //tap
+                    $('#gesture').append(dot);
+                    pattern += "d";
+                }
+                else{
+                    //silence
+                    $('#gesture').append(hyphen);
+                    pattern += "h";
+                }
+            }
+            
+            if(tot == 5){
+                $('#gesture').css('background-color', '#a0ed36');
+                $('#save').css('opacity',1);
+                console.log(pattern);
+            }
+            
+        });
+        
+        
+        myRegion2.bind(touchArea2,  gest, function(e){
+            
+            var num = e.detail.interval;
+            
+            tot2++;
+            
+            if(tot2 <= 5){
+                if(num < 50){
+                    //tap
+                    $('#gesture2').append(dot);
+                    pattern2 += "d";
+                }
+                else{
+                    //silence
+                    $('#gesture2').append(hyphen);
+                    pattern2 += "h";
+                }
+            }
+            
+            if(tot2 == 5){
+                
+                var success = false;
+                
+                for(var i = 1; i <= store.get('tot-patterns') ; i++){
+                    var tempp = store.get('pattern-'+i);
+                    console.log('pattern: ' + tempp);
+                    console.log('pattern2: ' + pattern2);
+                    if(tempp == pattern2 ){
+                        $('#gesture2').css('background-color', '#a0ed36');
+                        success = true;
+                        break;
+                    }
+                }
+                
+                if(!success){
+                    $('#gesture2').css('background-color', 'red');
+                }
+                
+            }
+            
+        });
+        
+        $('#save').on('click',function(){
+            store.set('tot-patterns', store.get('tot-patterns')+1);
+            var totp = store.get('tot-patterns');
+            store.set('pattern-'+totp, pattern);
+            $('section').hide();
+            $('#s2').show();
+        });
+        $('#skip').on('click',function(){
+            $('section').hide();
+            $('#s2').show();
+        });
+        
+        
+        
+    </script>
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

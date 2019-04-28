@@ -1,4 +1,6 @@
-public class Movie {
+import java.io.Serializable;
+
+public class Movie implements Serializable{
 	private String title, director, duration, year, classification;
 	
 	public Movie() {
