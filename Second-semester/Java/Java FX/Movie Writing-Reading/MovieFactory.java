@@ -2,6 +2,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.FileInputStream;
 
 public class MovieFactory {
     public static void main(String[] args) {
@@ -15,7 +16,7 @@ public class MovieFactory {
 
             FileOutputStream fos = new FileOutputStream("movies.oop");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-
+            
             oos.writeObject(m);
             oos.close();
 

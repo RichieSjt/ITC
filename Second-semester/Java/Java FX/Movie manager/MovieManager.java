@@ -1,12 +1,15 @@
+import java.io.*; 
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.geometry.*; 
 
 public class MovieManager extends Application{
 	private ObservableList<Movie> data;
@@ -14,9 +17,9 @@ public class MovieManager extends Application{
     private TextField title, duration, director, year, classification;
     
     public void start(Stage stage) throws Exception{
-
         //Stage settings
         stage.setTitle("Movie manager");
+        stage.getIcons().add(new Image("./movie.png"));
         stage.setWidth(800);
         stage.setHeight(600);
 
@@ -24,6 +27,21 @@ public class MovieManager extends Application{
         FlowPane contentPane = new FlowPane();
         FlowPane controlsPane = new FlowPane();
         GridPane moviePane = new GridPane();
+        
+        //Panes style
+        moviePane.setHgap(20);
+        moviePane.setVgap(20);
+        moviePane.setAlignment(Pos.CENTER);
+        moviePane.setPadding(new Insets(10, 10, 0, 10));
+        contentPane.setHgap(20);
+        contentPane.setVgap(20);
+        contentPane.setAlignment(Pos.CENTER);
+        contentPane.setPadding(new Insets(10, 10, 0, 10));
+        controlsPane.setHgap(20);
+        controlsPane.setVgap(20);
+        controlsPane.setAlignment(Pos.CENTER);
+        controlsPane.setPadding(new Insets(10, 40, 40, 40));
+
         mainPane.setCenter(contentPane);
         mainPane.setBottom(controlsPane);        
         contentPane.getChildren().add(moviePane);
@@ -58,8 +76,9 @@ public class MovieManager extends Application{
 
         //List
 		data = FXCollections.observableArrayList();
-		lvMovie = new ListView<>(data);
-		contentPane.getChildren().add(lvMovie);
+        lvMovie = new ListView<>(data);
+        contentPane.getChildren().add(lvMovie);
+        retrieveData();
 
         //Bottom content
         controlsPane.getChildren().add(add); 
@@ -86,7 +105,14 @@ public class MovieManager extends Application{
                 movieData();
             }
         });
-        
+
+        save.addEventFilter(MouseEvent.MOUSE_CLICKED,
+        new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e){
+                saveData();
+            }
+        });
+
         Scene scene = new Scene(mainPane);
         stage.setScene(scene);
         stage.show();
@@ -137,5 +163,43 @@ public class MovieManager extends Application{
         director.setText(m.getDirector());
         year.setText(m.getYear());
         classification.setText(m.getClassification());
+    }
+    private void saveData(){
+        Alert success = new Alert(Alert.AlertType.INFORMATION);
+        success.setTitle("Success");
+        success.setHeaderText("Movies data saved");
+
+        try{
+            Movie[] movies = new Movie[lvMovie.getItems().size()];
+            int i = 0;
+            for(Movie m : lvMovie.getItems()){
+                movies[i] = m;
+                i++;
+            }
+            FileOutputStream fos = new FileOutputStream("movies.oop");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(movies);
+            oos.close();
+            success.showAndWait();
+        }catch(FileNotFoundException e){
+            System.out.println("File not found");
+        }catch(IOException ioe){
+            System.out.println(ioe.getMessage());
+        }
+    }
+    private void retrieveData(){
+        int i;
+        try{
+            FileInputStream fis = new FileInputStream("movies.oop");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            Movie[] movies = (Movie[])ois.readObject();
+            for(i = 0; i < movies.length; i++)
+                data.add(movies[i]);
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+        } catch (ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+
     }
 }
