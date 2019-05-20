@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Local storage</title>
+</head>
+<body>
+    <h1>This is a local storage test</h1>
+    <section id = "storage-section">
+        
+        <div id = "item-container"></div>
+        
+        <div id = "buttons">
+            <input type="text" placeholder="Waiter serving" id = "waiter-input">
+            <span id = "add">Add</span>
+            <span id = "delete">Delete</span>
+        </div>
+
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/store.everything.min.js"></script>
+
+        <script>
+
+            //Local storage
+            if(store.get("itemsCounter") == undefined){
+                store.set("itemsCounter", 0);
+            }else{
+                displayTables();
+            }
+
+            $('#add').on('click',function(){
+                store.set("itemsCounter", store.get("itemsCounter")+1);
+                
+                store.set("table-"+store.get("itemsCounter"),{
+                    status: "none", waiter: $('#waiter-input').val(), activeClass: "none", color: "#687282" 
+                });
+                
+                displayTables();
+                
+            });
+
+            function displayTables(){
+                var counter = store.get("itemsCounter");
+                
+                $('#item-container').empty();
+                
+                for(var i = 1; i <= counter; i++){
+                    var table = store.get("table-"+i);
+                    //$(table.activeClass).css("background-color", table.activeColor);
+
+                    $('#item-container').append(`
+                        <div class = "table">
+                            <p>Table ${i}</p>
+                            <img src="img/dining-table.png">
+                                <div class = "status">
+                                    <span class = "status-button available${i} available" data-color = "#1aaf76" data-table = "table-${i}">Available</span>
+                                    <span class = "status-button reserved${i} reserved" data-color = "#1a9daf" data-table = "table-${i}">Reserved</span>
+                                    <span class = "status-button on-use${i} on-use" data-color = "#af1a35" data-table = "table-${i}">On use</span>
+                                </div>
+                            <p id = "waiter">Waiter serving: ${table.waiter}</p>
+                        </div>
+                    `);
+                }
+            }
+
+            $('#item-container').on('click','.status-button',function(){
+                var tableData = $(this).attr('data-table');
+                var tableObject = store.get(tableData);
+                var activeClass = tableObject.activeClass;
+                var activeColor = $(this).attr("data-color");
+
+                $(activeClass).css('background-color', '#687282');
+                activeClass = '.' + $(this).attr("class").split(" ")[1];
+                store.update(tableData,function(tableObject){
+                        tableObject.activeClass = activeClass;
+                        tableObject.color = activeColor;
+                });
+                
+                $(activeClass).css('background-color', $(this).attr("data-color"));
+    
+            })
+
+
+        </script>
+    </section>
+</body>
+</html>
