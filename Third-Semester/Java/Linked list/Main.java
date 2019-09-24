@@ -26,5 +26,7 @@ public class Main {
 
         lista.introducirDatoEnElIndice(19, 2);
         lista.imprimeLista();
+
+        System.out.println(lista.linearSearch(43));
     }
 }

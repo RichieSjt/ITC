@@ -1,4 +1,4 @@
-public class ListaLigada<T> {
+public class ListaLigada<T extends Comparable<T>>{
     private Nodo<T> inicial;
 
     public Nodo<T> getInicial(){
@@ -11,6 +11,20 @@ public class ListaLigada<T> {
 
     public boolean estaVacia(){
         return inicial == null;
+    }
+
+    public int linearSearch(T elemento) {
+        Nodo<T> temp = inicial;
+        int counter = 0;
+        
+        while(temp!=null){
+            if(temp.getElemento().compareTo(elemento)==0){
+                return counter;
+            }
+            temp = temp.getSiguiente();
+            counter++;
+        }
+        return -1;
     }
 
     public void insertarAlInicio(T elemento){
