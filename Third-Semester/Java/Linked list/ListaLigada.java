@@ -83,6 +83,43 @@ public class ListaLigada<T extends Comparable<T>>{
         }
     }
 
+    public Nodo<T> mergeSort(Nodo<T> inicio) {
+        Nodo<T> inicioAnterior = inicio;
+        int mid = contarElementos()/2;
+        
+        if(inicio.getSiguiente() == null)
+            return inicio;
+        
+        while((mid - 1) > 0){
+            inicioAnterior = inicioAnterior.getSiguiente();
+            mid--;
+        }
+        Nodo<T> nuevoInicio = inicioAnterior.getSiguiente();
+        inicioAnterior.setSiguiente(null);
+        inicioAnterior = inicio;
+
+        Nodo<T> temp1 = mergeSort(inicioAnterior);
+        Nodo<T> temp2 = mergeSort(nuevoInicio);
+
+        return merge(temp1, temp2);
+    }
+
+    public Nodo<T> merge(Nodo<T> a, Nodo<T> b){
+        Nodo<T> resultado = null;
+        if(a == null)
+            return b;
+        if(b == null)
+            return a;
+        if(a.getElemento().compareTo(b.getElemento()) > 0){
+            resultado = b;
+            resultado.setSiguiente(merge(a, b.getSiguiente()));
+        }else{
+            resultado = a;
+            resultado.setSiguiente(merge(a.getSiguiente(), b));
+        }
+        return resultado;
+    }
+
     public void insertarAlInicio(T elemento){
         Nodo<T> aInsertar = new Nodo<>(elemento);
         aInsertar.setSiguiente(inicial);
