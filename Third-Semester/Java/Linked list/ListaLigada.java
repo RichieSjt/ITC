@@ -13,6 +13,8 @@ public class ListaLigada<T extends Comparable<T>>{
         return inicial == null;
     }
 
+    /* Algoritmos de búsqueda */
+    
     public int linearSearch(T elemento) {
         Nodo<T> temp = inicial;
         int counter = 0;
@@ -26,20 +28,59 @@ public class ListaLigada<T extends Comparable<T>>{
         }
         return -1;
     }
+
     public int binarySearch(T elemento){
         int start = 0;
         int end = contarElementos()-1;
         int mid;
         while(start <= end){
             mid = (start + end)/2;
-            if(encontrarNodoEnIndice(mid).getElemento().compareTo(elemento) == 0)
+            if(encontrarElementoEnIndice(mid).compareTo(elemento) == 0)
                  return mid;
-            if(encontrarNodoEnIndice(mid).getElemento().compareTo(elemento) > 0)
+            if(encontrarElementoEnIndice(mid).compareTo(elemento) > 0)
                 end = mid - 1;
             else
                 start = mid + 1; 
         }
         return -1;
+    }
+    
+    /* Algoritmos de ordenamiento */
+
+    public void swap(int actual, int siguiente) {
+        //Obtenemos los elementos a cambiar
+        T elemento1 = encontrarElementoEnIndice(actual);
+        T elemento2 = encontrarElementoEnIndice(siguiente);
+        
+        //Sobreescribimos los elementos en los nodos
+		encontrarNodoEnIndice(actual).setElemento(elemento2);
+		encontrarNodoEnIndice(siguiente).setElemento(elemento1);
+		
+    }
+    
+    public void bubbleSort(){
+        boolean swapped;
+        int temp;
+        T actual, siguiente;
+        
+        for(int i = 0; i < contarElementos()-1; i++){
+            swapped = false;
+            for(int j = 0; j < contarElementos()-1; j++){
+
+                actual = encontrarElementoEnIndice(j);
+                siguiente = encontrarElementoEnIndice(j+1);
+                
+                if(actual.compareTo(siguiente) > 0){
+                //Swapping the elements
+                    swap(j, j+1);
+                    swapped = true;
+                }
+            }
+            //Si ningun elemento se swappeo significa que la lista ya
+            //está ordenada por lo tanto no es necesario continuar.
+            if(!swapped)
+                break;
+        }
     }
 
     public void insertarAlInicio(T elemento){
@@ -121,18 +162,9 @@ public class ListaLigada<T extends Comparable<T>>{
         System.out.println("Primer elemento de la lista: " + inicial.getElemento().toString());
     }
 
-    public void encontrarElementoEnIndice(int index){
-        int contador = 0;
-        Nodo<T> temp = inicial;
-        if(index >= contarElementos())
-            System.out.println("Index out of bounds");
-        else{
-            while(contador!=index){
-                temp = temp.getSiguiente();
-                contador++;
-            }
-            System.out.println("Elemento en el indice " + contador + ": " + temp.getElemento());
-        }
+    public T encontrarElementoEnIndice(int index){
+        return encontrarNodoEnIndice(index).getElemento();
+
     }
 
     public Nodo<T> encontrarNodoEnIndice(int index){
