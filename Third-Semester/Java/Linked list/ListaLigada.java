@@ -26,6 +26,21 @@ public class ListaLigada<T extends Comparable<T>>{
         }
         return -1;
     }
+    public int binarySearch(T elemento){
+        int start = 0;
+        int end = contarElementos()-1;
+        int mid;
+        while(start <= end){
+            mid = (start + end)/2;
+            if(encontrarNodoEnIndice(mid).getElemento().compareTo(elemento) == 0)
+                 return mid;
+            if(encontrarNodoEnIndice(mid).getElemento().compareTo(elemento) > 0)
+                end = mid - 1;
+            else
+                start = mid + 1; 
+        }
+        return -1;
+    }
 
     public void insertarAlInicio(T elemento){
         Nodo<T> aInsertar = new Nodo<>(elemento);
@@ -136,11 +151,27 @@ public class ListaLigada<T extends Comparable<T>>{
         }
     }
 
-    public void introducirDatoEnElIndice(T elemento, int index){
-        if(index >= contarElementos()){
-            System.out.println("Index out of bounds");
-        }
-        encontrarNodoEnIndice(index-1).setElemento(elemento);
-    }
-    //Porque el codigo del profe para este metodo difiere tanto;
+    public void insertarEnElIndice(int index, T elemento) {
+		if(estaVacia())
+			insertarAlInicio(elemento);
+		else {
+			if(index>=contarElementos()) {
+				System.out.println("No puedes insertar en ese indice");
+				return;
+			}
+			if(index==contarElementos()-1) {
+				insertarAlUltimo(elemento);
+				return;
+			}
+			if(index==0) {
+				insertarAlInicio(elemento);
+				return;
+			}
+			Nodo<T> anterior=encontrarNodoEnIndice(index-1);
+			Nodo<T> aInsertar= new Nodo<>(elemento);
+			aInsertar.setSiguiente(anterior.getSiguiente());
+			anterior.setSiguiente(aInsertar);
+			
+		}
+	}
 }
