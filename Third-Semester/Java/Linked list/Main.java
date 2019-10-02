@@ -36,7 +36,7 @@ public class Main {
 
         //lista.bubbleSort();
         lista.mergeSort(lista.getInicial());
-        
+         
         System.out.println("\nLista despues del sort: ");
 
         lista.imprimeLista();
