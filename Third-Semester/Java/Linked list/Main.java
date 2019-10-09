@@ -2,10 +2,10 @@ public class Main {
     public static void main(String[] args) {
         ListaLigada<Integer> lista = new ListaLigada<>();
         lista.estaVacia();
-        lista.insertarAlInicio(2);
+        lista.insertarAlInicio(27);
         lista.insertarAlInicio(8);
         lista.insertarAlInicio(7);
-        lista.insertarAlUltimo(43);
+        lista.insertarAlUltimo(42);
         lista.insertarAlUltimo(69);
         lista.imprimeLista();
         System.out.println("Numero de elementos: " + lista.contarElementos());
@@ -21,12 +21,27 @@ public class Main {
         lista.obtenerElUltimo();
         lista.obtenerElPrimero();
 
-        lista.encontrarElementoEnIndice(2);
-        lista.encontrarElementoEnIndice(3);
+        System.out.println("Elemento en el indice 1: " + lista.encontrarElementoEnIndice(1)); 
+        System.out.println("Elemento en el indice 2: " + lista.encontrarElementoEnIndice(2)); 
 
-        lista.introducirDatoEnElIndice(19, 2);
+        lista.insertarAlUltimo(25);
+        lista.insertarAlUltimo(1);
+        lista.insertarAlUltimo(34);
+        lista.insertarAlUltimo(51);
+        //lista.insertarAlUltimo(9);
+        //Solamente funciona con 6 elementos, porqué????
+
+        System.out.println("\nLista antes del sort: ");
         lista.imprimeLista();
 
-        System.out.println(lista.linearSearch(43));
+        //lista.bubbleSort();
+        lista.mergeSort(lista.getInicial());
+         
+        System.out.println("\nLista despues del sort: ");
+
+        lista.imprimeLista();
+        System.out.println("Indice del elemento 42 (Busqueda lineal): " + lista.linearSearch(42));
+        System.out.println("Indice del elemento 51 (Busqueda binaria): " + lista.binarySearch(51));
+
     }
 }
