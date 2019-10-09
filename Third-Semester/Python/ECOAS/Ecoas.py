@@ -15,11 +15,8 @@ import matplotlib.pyplot as plt
 df = pd.read_excel("Comentarios.xlsx", na_values = ["-", "n.a"])
 
 
-## Number of rows
-#print(df.shape[0])
-
-## Number o columns
-#print(df.shape[1])
+## Number of rows           ## Number o columns
+#print(df.shape[0])         #print(df.shape[1])
 
 ## Read first two rows
 #print(df.iloc[0:2])
@@ -33,7 +30,6 @@ df = pd.read_excel("Comentarios.xlsx", na_values = ["-", "n.a"])
 ## Reading columns
 #print(df[fields])
 #print(df[["Profesor"]])
-
 
 teacherDict = {}
 teacher_key = 0
@@ -51,6 +47,8 @@ for index, row in df.iterrows():
     teacherDict.update(teacher_data)
     teacher_key += 1
 
+word_dict = {}
+
 for key in teacherDict:
     items = teacherDict[key]
     comment = items[2]
@@ -60,4 +58,6 @@ for key in teacherDict:
     plt.axis("off")
     plt.show()
 
-    print(parse(comment))
+    print(pat.parse(comment))
+
+    
