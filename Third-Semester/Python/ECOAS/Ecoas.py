@@ -1,5 +1,4 @@
-import pattern.es as pat
-from pattern.en import parse
+from pattern.es import parse, split
 import pandas as pd
 import numpy as np
 from PIL import Image
@@ -47,7 +46,8 @@ for index, row in df.iterrows():
     teacherDict.update(teacher_data)
     teacher_key += 1
 
-word_dict = {}
+tagged_words_dict = {}
+
 
 for key in teacherDict:
     items = teacherDict[key]
@@ -58,6 +58,12 @@ for key in teacherDict:
     plt.axis("off")
     plt.show()
 
-    print(pat.parse(comment))
-
+    comment_tag = parse(comment)
     
+    for word, pos in comment_tag:
+        if pos == "JJ":
+            adjective = word
+            tagged_words_dict.update(adjective)
+        
+
+print(tagged_words_dict)
