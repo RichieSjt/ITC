@@ -1,0 +1,5 @@
+Creating a jar file in the terminal
+jar cfm Formulario.jar manifest.txt *.class Formulario.png
+
+Execute a jar in the terminal
+java -jar Formulario.jar
