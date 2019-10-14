@@ -1,4 +1,7 @@
 from pattern.es import parse, split
+from pattern.en import pprint
+from pattern.en import ngrams
+from pattern.en import tag
 import pandas as pd
 import numpy as np
 from PIL import Image
@@ -46,24 +49,21 @@ for index, row in df.iterrows():
     teacherDict.update(teacher_data)
     teacher_key += 1
 
-tagged_words_dict = {}
-
-
 for key in teacherDict:
     items = teacherDict[key]
     comment = items[2]
     
-    wordcloud = WordCloud().generate(comment)
+    #Extracting nouns(NN), verbs(VB), adjectives(JJ) and adverbs(RB)
+    #from the original comment
+    relevant_words = ""
+    for word, pos in tag(comment):
+        print(word + " " + pos)
+        if pos == "NN" or pos == "VB" or pos == "JJ" or pos == "RB":
+            relevant_words += " " + word
+
+    print("Relevant: " + relevant_words)
+
+    wordcloud = WordCloud().generate(relevant_words)
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis("off")
     plt.show()
-
-    comment_tag = parse(comment)
-    
-    for word, pos in comment_tag:
-        if pos == "JJ":
-            adjective = word
-            tagged_words_dict.update(adjective)
-        
-
-print(tagged_words_dict)
