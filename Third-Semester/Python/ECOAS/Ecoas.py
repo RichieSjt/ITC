@@ -49,6 +49,8 @@ for index, row in df.iterrows():
     teacherDict.update(teacher_data)
     teacher_key += 1
 
+low_rec_common = ""
+high_rec_common = ""
 for key in teacherDict:
     items = teacherDict[key]
     comment = items[2]
@@ -57,13 +59,29 @@ for key in teacherDict:
     #from the original comment
     relevant_words = ""
     for word, pos in tag(comment):
-        print(word + " " + pos)
+        #print(word + " " + pos)
         if pos == "NN" or pos == "VB" or pos == "JJ" or pos == "RB":
             relevant_words += " " + word
 
-    print("Relevant: " + relevant_words)
+    #print("Relevant: " + relevant_words)
+    items.append(relevant_words)
 
-    wordcloud = WordCloud().generate(relevant_words)
+    wordcloud = WordCloud(background_color="white").generate(relevant_words)
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis("off")
     plt.show()
+
+    if items[3] <= 5:
+        low_rec_common += relevant_words
+    if items[3] >= 5:
+        high_rec_common += relevant_words
+
+wordcloud = WordCloud(background_color="white").generate(low_rec_common)
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis("off")
+plt.show()
+
+wordcloud = WordCloud(background_color="white").generate(high_rec_common)
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis("off")
+plt.show()
