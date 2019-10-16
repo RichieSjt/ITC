@@ -1,12 +1,12 @@
 from pattern.es import parse, split
 from pattern.en import pprint
-from pattern.en import ngrams
-from pattern.en import tag
+from pattern.es import tag
 import pandas as pd
 import numpy as np
 from PIL import Image
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 import matplotlib.pyplot as plt
+import networkx as net
 
 ## Example, cleaning data from excel
 #df = pd.read_excel("Comentarios.xlsx", na_values={
@@ -59,7 +59,7 @@ for key in teacherDict:
     #from the original comment
     relevant_words = ""
     for word, pos in tag(comment):
-        #print(word + " " + pos)
+        print(word + " " + pos)
         if pos == "NN" or pos == "VB" or pos == "JJ" or pos == "RB":
             relevant_words += " " + word
 
@@ -85,3 +85,7 @@ wordcloud = WordCloud(background_color="white").generate(high_rec_common)
 plt.imshow(wordcloud, interpolation='bilinear')
 plt.axis("off")
 plt.show()
+
+#graph = networkx.Graph()
+#add_node()
+#add_edge()
