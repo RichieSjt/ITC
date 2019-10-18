@@ -13,6 +13,9 @@ public class FormularioScene extends Scene {
     public TextField nombre, matricula, calificacion;
     private ObservableList<Alumno> data;
     private ListView<Alumno> lvAlumnos;
+    private ListaLigada<Integer> lista = new ListaLigada<>();
+    private Alumno[] alumnos = new Alumno[100];
+    private int counter = 0;
 
     public FormularioScene(){
         super(new FlowPane());
@@ -73,6 +76,7 @@ public class FormularioScene extends Scene {
         ordenar.addEventFilter(MouseEvent.MOUSE_CLICKED,
         new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e){
+                lvAlumnos.getItems().clear();
                 ordenarLista();
             }
         });
@@ -106,12 +110,27 @@ public class FormularioScene extends Scene {
         Alert success = new Alert(Alert.AlertType.INFORMATION);
         success.setTitle("Exito");
         success.setHeaderText("El alumno se ha registrado correctamente");
-
+        
+        alumnos[counter] = a;
+        lista.insertarAlInicio(Integer.parseInt(a.getCalificacion()));
         data.add(a);
         success.showAndWait();
+        counter++;
     }
 
     private void ordenarLista(){
-       lvAlumnos.setItems(data.sorted());
+        int calif = 0;
+
+        lista.quickSort();
+
+        for(int i = 0; i < lista.contarElementos(); i++){
+            calif = lista.encontrarElementoEnIndice(i);
+            for(int j = 0; j < lista.contarElementos() ; j++){
+                if(calif == Integer.parseInt(alumnos[j].getCalificacion())){
+                    data.add(alumnos[j]);
+                }
+            }
+        }
+        lvAlumnos.setItems(data);
     }
 }
