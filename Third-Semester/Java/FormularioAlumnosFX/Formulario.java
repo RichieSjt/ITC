@@ -7,10 +7,10 @@ public class Formulario extends Application{
     public void start(Stage stage) throws Exception{
         Scene formularioScene = new FormularioScene();
 
-        stage.getIcons().add(new Image("img/Formulario.png"));
+        stage.getIcons().add(new Image("Formulario.png"));
         stage.setTitle("Formulario alumnos");
-        stage.setWidth(600);
-        stage.setHeight(550);
+        stage.setWidth(750);
+        stage.setHeight(650);
         stage.setScene(formularioScene);
         stage.show();
     }

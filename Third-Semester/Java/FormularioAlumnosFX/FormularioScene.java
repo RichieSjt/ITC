@@ -38,7 +38,8 @@ public class FormularioScene extends Scene {
         calificacion = new TextField();
 
         Button registrar = new Button("Registrar");
-        Button ordenar = new Button("Ordenar");
+        Button ordenar = new Button("Ordenar por Quick");
+        Button ordenarMerge = new Button("Ordenar por Merge");
 
         //Labels y textfields ordenados en un grid pane
         pane.add(lblNombre, 0, 0);
@@ -56,6 +57,7 @@ public class FormularioScene extends Scene {
         izquierda.getChildren().add(pane);
         izquierda.getChildren().add(registrar);
         izquierda.getChildren().add(ordenar);
+        izquierda.getChildren().add(ordenarMerge);
         izquierda.setAlignment(Pos.CENTER);
 
         //Agregamos todos nuestros contenedores al contenedor principal
@@ -77,7 +79,15 @@ public class FormularioScene extends Scene {
         new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e){
                 lvAlumnos.getItems().clear();
-                ordenarLista();
+                ordenarListaQuick();
+            }
+        });
+
+        ordenarMerge.addEventFilter(MouseEvent.MOUSE_CLICKED,
+        new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e){
+                lvAlumnos.getItems().clear();
+                ordenarListaMerge();
             }
         });
 
@@ -104,7 +114,7 @@ public class FormularioScene extends Scene {
         }
 
     }
-
+    //Se agrega el alumno a la lista
     private void registrarAlumno(Alumno a){
         Alert error = new Alert(Alert.AlertType.ERROR);
         Alert success = new Alert(Alert.AlertType.INFORMATION);
@@ -112,13 +122,13 @@ public class FormularioScene extends Scene {
         success.setHeaderText("El alumno se ha registrado correctamente");
         
         alumnos[counter] = a;
-        lista.insertarAlInicio(Integer.parseInt(a.getCalificacion()));
+        lista.insertarAlUltimo(Integer.parseInt(a.getCalificacion()));
         data.add(a);
         success.showAndWait();
         counter++;
     }
 
-    private void ordenarLista(){
+    private void ordenarListaQuick(){
         int calif = 0;
 
         lista.quickSort();
@@ -133,4 +143,29 @@ public class FormularioScene extends Scene {
         }
         lvAlumnos.setItems(data);
     }
+    private void ordenarListaMerge(){
+        int calif = 0;
+
+        //System.out.println("Lista antes");
+        //lista.imprimeLista();
+
+        lista.mergeSort();
+
+        //System.out.println("Lista despues");
+        //lista.imprimeLista();
+        
+        for(int i = 0; i < lista.contarElementos(); i++){
+            calif = lista.encontrarElementoEnIndice(i);
+            for(int j = 0; j < lista.contarElementos() ; j++){
+                if(calif == Integer.parseInt(alumnos[j].getCalificacion())){
+                    data.add(alumnos[j]);
+                }
+            }
+        }
+        lvAlumnos.setItems(data);
+    }
 }
+
+//Funciona: 2,9,5,4,3,15
+//Funciona:
+//No funciona el "1": 2,9,5,4,1,15
