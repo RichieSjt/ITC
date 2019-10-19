@@ -29,13 +29,14 @@ public class Main {
         lista.insertarAlUltimo(34);
         lista.insertarAlUltimo(51);
         //lista.insertarAlUltimo(9);
-        //Solamente funciona con 6 elementos, porqué????
+        //MergeSort solamente funciona con 6 elementos, porqué????
 
         System.out.println("\nLista antes del sort: ");
         lista.imprimeLista();
 
         //lista.bubbleSort();
-        lista.mergeSort(lista.getInicial());
+        //lista.mergeSort();
+        lista.quickSort();
          
         System.out.println("\nLista despues del sort: ");
 

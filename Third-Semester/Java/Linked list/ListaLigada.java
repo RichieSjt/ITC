@@ -83,6 +83,37 @@ public class ListaLigada<T extends Comparable<T>>{
         }
     }
 
+    public void quickSort(){
+        quickSort(0,contarElementos()-1);
+    }
+    //Método privado que ejecuta quicksort
+    private void quickSort(int left, int right){
+        T pivot = encontrarElementoEnIndice((right+left)/2);
+        int i = left;
+        int j = right;
+        while (i<=j){
+            while (encontrarElementoEnIndice(i).compareTo(pivot)<0){
+                i++;
+            }
+            while (encontrarElementoEnIndice(j).compareTo(pivot)>0){
+                j--;
+            }
+            if (i<=j){
+                if (i!=j){
+                    swap(i,j);
+                }
+                i++;
+                j--;
+            }
+        }
+        if(left<j){
+            quickSort(left,j);
+        }
+        if(i<right){
+            quickSort(i,right);
+        }
+    }
+
     public Nodo<T> mergeSort(Nodo<T> inicio) {
         Nodo<T> inicioAnterior = inicio;
         int mid = contarElementos()/2;
