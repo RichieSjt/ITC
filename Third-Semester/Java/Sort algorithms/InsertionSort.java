@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.Arrays;
 
-public class BubbleSort{
+public class InsertionSort {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int[] num = randomArray();
@@ -9,33 +9,28 @@ public class BubbleSort{
         System.out.println("Array before sort: ");
         System.out.println(Arrays.toString(num));
 
-        bubble(num);
-        
+        insertion(num);
+
         System.out.println("\nArray after sort: ");
         System.out.println(Arrays.toString(num));
 
         sc.close();
     }
     
-    public static void bubble(int[]num){
-        boolean swapped;
-        int temp;
-        
-        for(int i = 0; i < num.length-1; i++){
-            swapped = false;
-            for(int j = 0; j < num.length-1; j++){
-                if(num[j] > num[j+1]){
+    public static void insertion(int[] num) {
+        int i, j, temp;
+        i = 1;
+        while(i < num.length){
+            j = i;
+            while((j > 0) && num[j-1] > num[j]){
                 //Swapping the elements
-                    temp = num[j+1];
-                    num[j+1] = num[j];
-                    num[j] = temp;
-                    swapped = true;
-                }
+                temp = num[j-1];
+                num[j-1] = num[j];
+                num[j] = temp;
+
+                j--;
             }
-            //Si ningun elemento se swappeo significa que la lista ya
-            //está ordenada por lo tanto no es necesario continuar.
-            if(!swapped)
-                break;
+            i++;
         }
         //end
     }
@@ -48,5 +43,4 @@ public class BubbleSort{
         }
         return arr;
     }
-
 }
