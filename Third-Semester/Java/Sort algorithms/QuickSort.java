@@ -32,7 +32,6 @@ public class QuickSort {
                 j--;
             
             if (i <= j){
-                
                 int temp = num[i];
                 num[i] = num[j];
                 num[j] = temp;
