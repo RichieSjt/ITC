@@ -1,12 +1,12 @@
-n = int(input())
+n = input()
 
-numbers = input().split(" ")
-
-r = input().split(" ")
-
-print(r[0])
+numbers = raw_input().split(" ")
+nrange = raw_input().split(" ")
 
 counter = 0
-for i in range(0, n-1):
-    if(r[0] < numbers[i]):
-        counter+=1
+
+for n in numbers:
+  if(int(n) >= int(nrange[0]) and int(n) <= int(nrange[1])):
+    counter += 1
+    
+print(counter)
