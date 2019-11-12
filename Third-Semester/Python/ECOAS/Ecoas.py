@@ -1,6 +1,9 @@
+#TODO: Lemmatize verbs and singularize nouns
+#TODO: extract the sentence following the adverb "no"s
+
 from pattern.es import parse, split
-from pattern.en import pprint
 from pattern.es import tag
+from pattern.en import pprint
 import pandas as pd
 import numpy as np
 from PIL import Image
@@ -15,7 +18,6 @@ import networkx as net
 #})
 
 df = pd.read_excel("Comentarios.xlsx", na_values = ["-", "n.a"])
-
 
 ## Number of rows           ## Number o columns
 #print(df.shape[0])         #print(df.shape[1])
@@ -51,35 +53,48 @@ for index, row in df.iterrows():
 
 low_rec_common = ""
 high_rec_common = ""
+
 for key in teacherDict:
     items = teacherDict[key]
     comment = items[2]
+
+    print("Cloud from: " + items[0])
     
     #Extracting nouns(NN), verbs(VB), adjectives(JJ) and adverbs(RB)
     #from the original comment
     relevant_words = ""
     for word, pos in tag(comment):
-        print(word + " " + pos)
-        if pos == "NN" or pos == "VB" or pos == "JJ" or pos == "RB":
+        #print(word + " " + pos)
+        if pos == "NN" or pos == "NNS" or pos == "VBN" or pos == "VB" or pos == "JJ" or pos == "RB" and word != "no":
+            relevant_words += " " + word
+        #If an adverb is the word "no", we want to know the next words to get a more complete sentence
+        elif pos == "RB" and word == "no":
+            #TODO: extract the sentence following the adverb "no"
             relevant_words += " " + word
 
     #print("Relevant: " + relevant_words)
     items.append(relevant_words)
+
+    if items[3] < 5:
+        print("Low rec, rec: " + str(items[3]))
+        low_rec_common += relevant_words
+    if items[3] >= 5:
+        print("High rec, rec: " + str(items[3]))
+        high_rec_common += relevant_words
 
     wordcloud = WordCloud(background_color="white").generate(relevant_words)
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis("off")
     plt.show()
 
-    if items[3] <= 5:
-        low_rec_common += relevant_words
-    if items[3] >= 5:
-        high_rec_common += relevant_words
+print("Cloud from: Low rec teachers")
 
 wordcloud = WordCloud(background_color="white").generate(low_rec_common)
 plt.imshow(wordcloud, interpolation='bilinear')
 plt.axis("off")
 plt.show()
+
+print("Cloud from: High rec teachers")
 
 wordcloud = WordCloud(background_color="white").generate(high_rec_common)
 plt.imshow(wordcloud, interpolation='bilinear')
