@@ -2,7 +2,7 @@
 #TODO: extract the sentence following the adverb "no"s
 
 from pattern.es import parse, split
-from pattern.es import tag
+from pattern.es import tag as word_tag
 from pattern.en import pprint
 #import nltk
 import pandas as pd
@@ -11,6 +11,12 @@ from PIL import Image
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 import matplotlib.pyplot as plt
 import networkx as net
+
+def generate_word_cloud(data):
+    wordcloud = WordCloud(background_color="white").generate(data)
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis("off")
+    plt.show()
 
 ## Example, cleaning data from excel
 #df = pd.read_excel("Comentarios.xlsx", na_values={
@@ -55,28 +61,40 @@ high_rec_common = ""
 for key in teacherDict:
     items = teacherDict[key]
     comment = items[2]
-    commentArr = comment.split()
+
+    #Lemmatizing the comment to generalize words
+    lemmatized_comment = ""
+    parsed_comment = parse(comment, tokenize = False, tags = False, relations = False, chunks = False, lemmata = True, tagset = None)
+    for sentence in parsed_comment.split():
+        for token, tag, lemma in sentence:
+            lemmatized_comment += lemma + " "
+
+    tagged_comment = word_tag(lemmatized_comment)
 
     #Extracting nouns(NN), verbs(VB), adjectives(JJ) and adverbs(RB)
     #from the original comment
     relevant_words = ""
-
-    wordCounter = 0
-    for word, pos in tag(comment):
+    current_word_counter = 0
+    for word, pos in tagged_comment:
         #print(word + " " + pos)
         if pos == "NN" or pos == "NNS" or pos == "VBN" or pos == "VB" or pos == "JJ" or pos == "RB" and word != "no":
             relevant_words += " " + word
-        #If an adverb is the word "no", we want to know the next words to get a more complete sentence
+
+        #If an adverb is the word "no", we want to know the next or previous word 
+        #to get a more complete sentence
         elif pos == "RB" and word == "no" :
-            nextWord = commentArr[wordCounter+1]
-            previousWord = commentArr[wordCounter-1]
+            #TODO: Access the tagged_comment dictionary to obtain previous and next words
+            nextWord = commentArr[wordCounter + 1]
+            if(nextWord == "." or  nextWord == ","):
+                nextWord = commentArr[wordCounter + 2]
+            
+            
         
             print("Word after 'no': " + word + " " + nextWord)
             print("Word before 'no': " + previousWord + " " + word)
             
             relevant_words += " " + word + " " + nextWord
-
-        wordCounter += 1
+        current_word_counter += 1
         
     #print("Relevant: " + relevant_words)
     items.append(relevant_words)
@@ -88,29 +106,18 @@ for key in teacherDict:
     if items[3] >= 5:
         print("High rec, rec: " + str(items[3]))
         high_rec_common += relevant_words
-        
-    wordcloud = WordCloud(background_color="white").generate(relevant_words)
-    plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis("off")
-    plt.show()
+    
+    generate_word_cloud(relevant_words)
 
 print("Cloud from: Low rec teachers")
-
-wordcloud = WordCloud(background_color="white").generate(low_rec_common)
-plt.imshow(wordcloud, interpolation='bilinear')
-plt.axis("off")
-plt.show()
+generate_word_cloud(low_rec_common)
 
 #tokens = [t for t in low_rec_common.split()]
 #freq = nltk.FreqDist(tokens)
 #freq.plot(20, cumulative=False)
 
 print("Cloud from: High rec teachers")
-
-wordcloud = WordCloud(background_color="white").generate(high_rec_common)
-plt.imshow(wordcloud, interpolation='bilinear')
-plt.axis("off")
-plt.show()
+generate_word_cloud(high_rec_common)
 
 #graph = networkx.Graph()
 #add_node()
