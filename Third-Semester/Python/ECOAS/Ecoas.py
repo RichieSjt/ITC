@@ -3,8 +3,6 @@
 
 from pattern.es import parse, split
 from pattern.es import tag as word_tag
-from pattern.en import pprint
-#import nltk
 import pandas as pd
 import numpy as np
 from PIL import Image
@@ -80,20 +78,31 @@ for key in teacherDict:
         if pos == "NN" or pos == "NNS" or pos == "VBN" or pos == "VB" or pos == "JJ" or pos == "RB" and word != "no":
             relevant_words += " " + word
 
-        #If an adverb is the word "no", we want to know the next or previous word 
-        #to get a more complete sentence
+        #If an adverb is the word "no", we recover the following word
         elif pos == "RB" and word == "no" :
-            #TODO: Access the tagged_comment dictionary to obtain previous and next words
-            nextWord = commentArr[wordCounter + 1]
-            if(nextWord == "." or  nextWord == ","):
-                nextWord = commentArr[wordCounter + 2]
-            
-            
+            local_counter = current_word_counter + 1
+            next_word = tagged_comment[local_counter][0]
+            next_tag = tagged_comment[local_counter][1]
+
+            #Searches for the next relevant word after "no"
+            while(True):
+                if(next_tag == "VB" or next_tag == "NN" or next_tag == "MD"):
+                    break
+                local_counter += 1
+                next_tag = tagged_comment[local_counter][1]
+                next_word = tagged_comment[local_counter][0]
+
+            if(next_word == "ser" or next_word == "haber"):
+                next_word = tagged_comment[local_counter][0] + "X" + tagged_comment[local_counter + 1][0]
+                tagged_comment[local_counter + 1] = ["none", "none"]
+
+            #The words from the extracted sentence should not be taken into account
+            #in following iterations to avoid repetitions and noise generation
+            tagged_comment[local_counter] = ["none", "none"]
+
+            relevant_words += " " + word + "X" + next_word
         
-            print("Word after 'no': " + word + " " + nextWord)
-            print("Word before 'no': " + previousWord + " " + word)
-            
-            relevant_words += " " + word + " " + nextWord
+            print("Next word: noX" + next_word + "------------------------------------")
         current_word_counter += 1
         
     #print("Relevant: " + relevant_words)
@@ -109,6 +118,8 @@ for key in teacherDict:
     
     generate_word_cloud(relevant_words)
 
+#Bueno para recursar
+#Es buena debatiendo pero
 print("Cloud from: Low rec teachers")
 generate_word_cloud(low_rec_common)
 
