@@ -1,6 +1,3 @@
-#TODO: Lemmatize verbs and singularize nouns
-#TODO: extract the sentence following the adverb "no"s
-
 from pattern.es import parse, split
 from pattern.es import tag as word_tag
 import pandas as pd
@@ -8,7 +5,7 @@ import numpy as np
 from PIL import Image
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 import matplotlib.pyplot as plt
-import networkx as net
+import networkx as nx
 
 def generate_word_cloud(data):
     wordcloud = WordCloud(background_color="white").generate(data)
@@ -40,6 +37,8 @@ df = pd.read_excel("Comentarios.xlsx", na_values = ["-", "n.a"])
 teacherDict = {}
 teacher_key = 0
 
+graph = nx.Graph()
+
 for index, row in df.iterrows():
 
     teacher_name = row["Profesor"]
@@ -56,6 +55,7 @@ for index, row in df.iterrows():
 low_rec_common = ""
 high_rec_common = ""
 
+#Making this process for each individual comment
 for key in teacherDict:
     items = teacherDict[key]
     comment = items[2]
@@ -108,6 +108,10 @@ for key in teacherDict:
     #print("Relevant: " + relevant_words)
     items.append(relevant_words)
 
+    #Adding the comment relevant words as a node into the graph
+    graph.add_node(relevant_words)
+
+    #Printing the cloud from the teacher
     print("Cloud from: " + items[0])
     if items[3] < 5:
         print("Low rec, rec: " + str(items[3]))
@@ -130,6 +134,11 @@ generate_word_cloud(low_rec_common)
 print("Cloud from: High rec teachers")
 generate_word_cloud(high_rec_common)
 
-#graph = networkx.Graph()
+#TODO: Compare the relevant words from each comment to every other comment to check for duplicates
+#if a duplicate exists, then add an edge between those two nodes.
+
+nx.draw_random(graph)
+plt.show()
+
 #add_node()
 #add_edge()
