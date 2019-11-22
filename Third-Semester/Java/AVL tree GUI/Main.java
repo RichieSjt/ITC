@@ -12,8 +12,8 @@ public class Main extends Application{
     public void start(Stage stage) throws Exception{
         mainStage = stage;
         stage.setTitle("AVL tree");
-        stage.setWidth(600);
-        stage.setHeight(550);
+        stage.setWidth(1000);
+        stage.setHeight(625);
         stage.show();
         stage.setScene(AVLscene);
     }

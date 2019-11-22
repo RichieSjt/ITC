@@ -14,9 +14,12 @@ public class AVLscene extends Scene {
     private Main main;
     private TextField input;
     private Tree<Integer> arbol = new Tree<>();
-    ArrayList<StackPane> circles = new ArrayList<>();
+    private ArrayList<StackPane> circles = new ArrayList<>();
+    private double vGap = 60;
+    private double radius = 20;
+    private Pane avl;
 
-    @SuppressWarnings("unchecked")
+    
     public AVLscene(Main main) {
         super(new VBox());
         this.main = main;
@@ -26,12 +29,14 @@ public class AVLscene extends Scene {
         ****************/
         VBox mainContent = new VBox(20);
         MenuBar menuBar = new MenuBar();
-        Menu menu = new Menu("Options");
-        MenuItem exitOption = new MenuItem("Exit     ");
-        Pane avl = new Pane();
+        Menu menu = new Menu("Options    ");
+        MenuItem randomTree = new MenuItem("Random tree");
+        MenuItem clear = new MenuItem("Clear");
+        MenuItem exitOption = new MenuItem("Exit");
+        avl = new Pane();
         FlowPane bottom = new FlowPane();
         
-        Label lblinput = new Label("Elemento a insertar:");
+        Label lblinput = new Label("Elemento:");
         input = new TextField();
         Button insert = new Button("Insertar");
         Button delete = new Button("Borrar");
@@ -39,9 +44,8 @@ public class AVLscene extends Scene {
         /*********** 
         *  Styles  *
         ************/
-        avl.prefHeight(300);
-        avl.prefWidth(400);
-        avl.setPadding(new Insets(10, 10, 10, 10));
+        avl.setMinSize(900, 450);
+        avl.setPadding(new Insets(20, 20, 20, 20));
 
         bottom.setHgap(15);
         bottom.setVgap(15);
@@ -51,7 +55,7 @@ public class AVLscene extends Scene {
         /************************* 
         * Main content structure *
         **************************/
-        menu.getItems().add(exitOption);
+        menu.getItems().addAll(randomTree, clear, exitOption);
         menuBar.getMenus().add(menu);
         bottom.getChildren().addAll(lblinput, input, insert, delete);
         mainContent.getChildren().addAll(menuBar, avl, bottom);
@@ -64,60 +68,66 @@ public class AVLscene extends Scene {
             main.closeStage();
         });
         insert.setOnAction(e -> {
-            int toInsert = Integer.parseInt(input.getText());
-            arbol.insertElement(toInsert);
-            avl.getChildren().add(displayCircle(toInsert));
+            try{
+                int toInsert = Integer.parseInt(input.getText());
+                try{
+                    arbol.insertElement(toInsert);
+                    displayAVLTree();
+                }catch(DuplicateException de){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Duplicate");
+                    alert.setHeaderText(de.getMessage());
+                    alert.showAndWait();
+                }
+            }catch(Exception empty){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Empty field");
+                alert.setHeaderText("Please introduce an element");
+                alert.showAndWait();
+            }
             
             input.setText("");
-            if(circles.size()>2 && circles.size()%2==0)
-                displayLines();
         });
         delete.setOnAction(e -> {
-            //arbol.deleteNode(Integer.parseInt(input.getText()));
+            arbol.deleteNode(Integer.parseInt(input.getText()));
+            displayAVLTree();
             input.setText("");
         });
     }
-    public StackPane displayCircle(int element){
-        StackPane stackPane = new StackPane();
-        //For text
-        Text text = new Text(element+"");
-        text.setFont(new Font(30));
-        text.setBoundsType(TextBoundsType.VISUAL);
-        //FOr circles
-        Circle circle = new Circle(150.0f, 150.0f, 30.f);
-        circle.setId("circle");
-        circle.setStroke(Color.GRAY);
-        circle.setStrokeWidth(1);
-        circle.setStrokeType(StrokeType.INSIDE);
-        circle.setFill(Color.rgb((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256)));
-        int x = (int)(Math.random()*600);
-        int y = (int)(Math.random()*600);
-        stackPane.relocate(x, y);
-        stackPane.getChildren().addAll(circle,text);
-
-        circles.add(stackPane);
-        return stackPane;
-    }
-    public void displayLines(){
-        for(int i = 0; i < circles.size(); i+=2){
-            connect(circles.get(i), circles.get(i+1));
+    
+    /******************** 
+    * Recursive display *
+    *********************/
+    public void displayAVLTree() {
+        avl.getChildren().clear(); // Clear the pane
+        if (arbol.getOrigin() != null) {
+            // Display tree recursively
+            displayAVLTree(arbol.getOrigin(), avl.getWidth() / 2, vGap, avl.getWidth() / 4);
         }
     }
 
-    public void connect(StackPane stack1, StackPane stack2){
-        Line line = new Line();
-        Circle circle1 = (Circle)stack1.lookup("circle");
-        Circle circle2 = (Circle)stack2.lookup("circle");
+    private void displayAVLTree(Node root, double x, double y, double hGap) {
+        if (root.getLeft() != null) {
+            // Draw a line to the left node
+            avl.getChildren().add(new Line(x - hGap, y + vGap, x, y));
+            // Draw the left subtree recursively
+            displayAVLTree(root.getLeft(), x - hGap, y + vGap, hGap / 2);
+        }
 
-        
-        //TODO:  conseguir las posiciones de x y y de los dos circulos
-        line.setStrokeWidth(2);
-        line.setStartX(circle1.getCenterX());
-        line.setStartY(circle1.getCenterY());
-        line.setEndX(circle2.getCenterX());
-        line.setEndY(circle2.getCenterY());
-        
+        if (root.getRight() != null) {
+            // Draw a line to the right node
+            avl.getChildren().add(new Line(x + hGap, y + vGap, x, y));
+            // Draw the right subtree recursively
+            displayAVLTree(root.getRight(), x + hGap, y + vGap, hGap / 2);
+        }
+        // Display a node
+        Circle circle = new Circle(x, y, radius);
+        circle.setId("circle");
+        circle.setStroke(Color.GRAY);
+        circle.setStrokeWidth(1);
+        //circle.setFill(Color.rgb((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256)));
+        circle.setFill(Color.CYAN);
+        avl.getChildren().addAll(circle, new Text(x - 4, y + 4, root.getElement() + ""));
     }
-
 
 }
