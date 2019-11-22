@@ -1,9 +1,6 @@
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.shape.*;
 import javafx.scene.text.*;
@@ -32,6 +29,7 @@ public class AVLscene extends Scene {
         Menu menu = new Menu("Options    ");
         MenuItem randomTree = new MenuItem("Random tree");
         MenuItem clear = new MenuItem("Clear");
+        MenuItem fullScreen = new MenuItem("Full screen");
         MenuItem exitOption = new MenuItem("Exit");
         avl = new Pane();
         FlowPane bottom = new FlowPane();
@@ -55,7 +53,7 @@ public class AVLscene extends Scene {
         /************************* 
         * Main content structure *
         **************************/
-        menu.getItems().addAll(randomTree, clear, exitOption);
+        menu.getItems().addAll(randomTree, clear, fullScreen, exitOption);
         menuBar.getMenus().add(menu);
         bottom.getChildren().addAll(lblinput, input, insert, delete);
         mainContent.getChildren().addAll(menuBar, avl, bottom);
@@ -94,7 +92,7 @@ public class AVLscene extends Scene {
             input.setText("");
         });
     }
-    
+
     /******************** 
     * Recursive display *
     *********************/

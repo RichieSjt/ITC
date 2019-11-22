@@ -1,9 +1,6 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import java.io.*;
-import java.util.Scanner;
 
 public class Main extends Application{
     private Stage mainStage;
