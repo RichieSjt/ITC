@@ -1,27 +1,29 @@
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
 import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.scene.paint.Color;
-import java.util.ArrayList;
+import java.util.*;
 
 public class AVLscene extends Scene {
     private Main main;
     private TextField input;
-    private Tree<Integer> arbol = new Tree<>();
-    private ArrayList<StackPane> circles = new ArrayList<>();
+    private AVLTree<Integer> arbol = new AVLTree<>();
     private double vGap = 60;
     private double radius = 20;
     private Pane avl;
 
-    
     public AVLscene(Main main) {
         super(new VBox());
         this.main = main;
 
-        /*************** 
+        /***************
         * GUI Elements *
         ****************/
         VBox mainContent = new VBox(20);
@@ -29,17 +31,28 @@ public class AVLscene extends Scene {
         Menu menu = new Menu("Options    ");
         MenuItem randomTree = new MenuItem("Random tree");
         MenuItem clear = new MenuItem("Clear");
-        MenuItem fullScreen = new MenuItem("Full screen");
         MenuItem exitOption = new MenuItem("Exit");
-        avl = new Pane();
         FlowPane bottom = new FlowPane();
-        
-        Label lblinput = new Label("Elemento:");
-        input = new TextField();
-        Button insert = new Button("Insertar");
-        Button delete = new Button("Borrar");
 
-        /*********** 
+        avl = new Pane();
+        input = new TextField();
+
+        Label lblinput = new Label("Element:");
+        Button insert = new Button("Insert");
+        Button delete = new Button("Delete");
+
+        /****************
+        * Key shortcuts *
+        *****************/
+        randomTree.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN));
+        exitOption.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN));
+        input.setOnKeyPressed((KeyEvent keyEvent) -> {
+            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                insert();
+            } 
+        });
+
+        /***********
         *  Styles  *
         ************/
         avl.setMinSize(900, 450);
@@ -49,42 +62,31 @@ public class AVLscene extends Scene {
         bottom.setVgap(15);
         bottom.setAlignment(Pos.CENTER);
         bottom.setPadding(new Insets(10, 10, 10, 10));
-        
-        /************************* 
+
+        /*************************
         * Main content structure *
         **************************/
-        menu.getItems().addAll(randomTree, clear, fullScreen, exitOption);
+        menu.getItems().addAll(clear, randomTree, exitOption);
         menuBar.getMenus().add(menu);
         bottom.getChildren().addAll(lblinput, input, insert, delete);
         mainContent.getChildren().addAll(menuBar, avl, bottom);
         super.setRoot(mainContent);
 
-        /***************** 
+        /*****************
         * Event handlers *
         ******************/
+        randomTree.setOnAction(e -> {
+            randomTree();
+        });
+        clear.setOnAction(e -> {
+            avl.getChildren().clear();
+            arbol.setOrigin(null);
+        });
         exitOption.setOnAction(e -> {
             main.closeStage();
         });
         insert.setOnAction(e -> {
-            try{
-                int toInsert = Integer.parseInt(input.getText());
-                try{
-                    arbol.insertElement(toInsert);
-                    displayAVLTree();
-                }catch(DuplicateException de){
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Duplicate");
-                    alert.setHeaderText(de.getMessage());
-                    alert.showAndWait();
-                }
-            }catch(Exception empty){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Empty field");
-                alert.setHeaderText("Please introduce an element");
-                alert.showAndWait();
-            }
-            
-            input.setText("");
+            insert();
         });
         delete.setOnAction(e -> {
             arbol.deleteNode(Integer.parseInt(input.getText()));
@@ -93,9 +95,10 @@ public class AVLscene extends Scene {
         });
     }
 
-    /******************** 
-    * Recursive display *
-    *********************/
+    /*****************
+    * Events methods *
+    ******************/
+
     public void displayAVLTree() {
         avl.getChildren().clear(); // Clear the pane
         if (arbol.getOrigin() != null) {
@@ -124,8 +127,53 @@ public class AVLscene extends Scene {
         circle.setStroke(Color.GRAY);
         circle.setStrokeWidth(1);
         //circle.setFill(Color.rgb((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256)));
-        circle.setFill(Color.CYAN);
+        circle.setFill(Color.rgb(89, 217, 149));
         avl.getChildren().addAll(circle, new Text(x - 4, y + 4, root.getElement() + ""));
     }
 
+    private void randomTree(){
+        avl.getChildren().clear();
+        arbol.setOrigin(null);
+        Random randNum = new Random();
+        //random array size from 3 to 15
+        int setSize = (randNum.nextInt(15)+3);
+        //Create a HashSet to get only unique elements
+        Set<Integer> set = new LinkedHashSet<Integer>();
+        while (set.size() < setSize) {
+            set.add(randNum.nextInt(100)+1);
+        }
+        try{
+            for(int x: set){
+                arbol.insertElement(x);
+            }
+        }catch(DuplicateException de){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Duplicate");
+            alert.setHeaderText(de.getMessage());
+            alert.showAndWait();
+        }
+        displayAVLTree();
+    }
+
+    private void insert(){
+        try{
+            int toInsert = Integer.parseInt(input.getText());
+            try{
+                arbol.insertElement(toInsert);
+                displayAVLTree();
+            }catch(DuplicateException de){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Duplicate");
+                alert.setHeaderText(de.getMessage());
+                alert.showAndWait();
+            }
+        }catch(Exception empty){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Empty field");
+            alert.setHeaderText("Please introduce an element");
+            alert.showAndWait();
+        }
+        input.setText("");
+    }
+    
 }

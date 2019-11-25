@@ -1,4 +1,4 @@
-public class Node<T extends Comparable<T>> {
+public class Node<T> {
     private T element;
     private Node<T> left;
     private Node<T> right;
@@ -39,7 +39,4 @@ public class Node<T extends Comparable<T>> {
     public void setHeight(int height) {
         this.height = height;
     }
-	public String toString(){
-		return element + "";
-	}
 }

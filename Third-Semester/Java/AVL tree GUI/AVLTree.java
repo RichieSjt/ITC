@@ -1,5 +1,4 @@
-public class Tree<T extends Comparable<T>>{
-
+public class AVLTree<T extends Comparable<T>> {
     private Node<T> origin;
 
     public Node<T> getOrigin() {
@@ -12,7 +11,7 @@ public class Tree<T extends Comparable<T>>{
     //we create the root ot the origin
     public void insertElement(T element) throws DuplicateException{
         if(search(element))
-            throw new DuplicateException("Number is already in the tree");
+            throw new DuplicateException("Element already in the tree");
         else
             origin = insertElement(element,origin);
     }
@@ -29,13 +28,13 @@ public class Tree<T extends Comparable<T>>{
                 temp = temp.getRight();
             else // element matches temp element
                 return true; // Element is found
-            
+
         }
         return false;
     }
 
     //insert a new element to the tree
-    private Node<T> insertElement(T element, Node<T> origin){    
+    private Node<T> insertElement(T element, Node<T> origin){
         if(origin==null)
             origin = new Node<T>(element);
         else {
@@ -45,7 +44,7 @@ public class Tree<T extends Comparable<T>>{
                 if(height(origin.getLeft())-height(origin.getRight())==-2) {
                     if(element.compareTo(origin.getRight().getElement())>0)
                         origin= rotateSimpleToLeft(origin);
-                    else 
+                    else
                         origin= rotateDoubleToLeft(origin);
                 }
             }
@@ -62,7 +61,7 @@ public class Tree<T extends Comparable<T>>{
         }
 
         int height = maxHeight(height (origin.getLeft()),height(origin.getRight()));
-        System.out.println("Height: "+origin.getElement()+" "+height);
+        //System.out.println("Height: "+origin.getElement()+" "+height);
         origin.setHeight(height+1);
         return origin;
     }
@@ -98,22 +97,22 @@ public class Tree<T extends Comparable<T>>{
     private int maxHeight(int a, int b) {
         if(a>b)
             return a;
-        else 
+        else
             return b;
     }
     //get the specific height of a node
     private int height(Node<T> node) {
         if(node==null)
             return -1;
-        else 
+        else
             return node.getHeight();
     }
-    
+
     private Node<T> findMin( Node<T> node ) {
         if( node == null )
             return node;
-    
-        while( node.getLeft() != null )
+
+        while(node.getLeft() != null )
             node = node.getLeft();
         return node;
     }
@@ -131,8 +130,18 @@ public class Tree<T extends Comparable<T>>{
         }else if(element.compareTo(node.getElement())>0){
             node.setRight(deleteNode(node.getRight(), element));
         }else if( node.getLeft() != null && node.getRight() != null ) {
-            node.setElement(findMin( node.getRight() ).getElement());
+            node.setElement(findMin(node.getRight()).getElement());
             node.setRight(deleteNode(node.getRight(),node.getElement()));
+        }else if(node.getLeft() != null || node.getRight() != null) {
+            if (node.getRight() == null) {
+                node.setElement(findMin(node.getLeft()).getElement());
+                node.setRight(deleteNode(node.getLeft(), node.getElement()));
+                node.setLeft(null);
+            } else {
+                node.setElement(findMin(node.getRight()).getElement());
+                node.setRight(deleteNode(node.getRight(), node.getElement()));
+                node.setRight(null);
+            }
         }else{
             node = (node.getLeft() != null) ? node.getLeft() : node.getRight();
         }
@@ -140,5 +149,34 @@ public class Tree<T extends Comparable<T>>{
         return node;
 
     }
-        
+
+    /*
+    public void balanceTree(T element){
+        balanceTree(origin,element);
+    }
+    private Node<T> balanceTree(Node<T> origin,T element){
+        if(origin == null){
+            origin = new Node<T>(element);
+        } else {
+                //it is checked that it is balanced
+                if (height(origin.getLeft()) - height(origin.getRight()) == -2) {
+                    if (element.compareTo(origin.getRight().getElement()) > 0)
+                        origin = rotateSimpleToLeft(origin);
+                    else
+                        origin = rotateDoubleToLeft(origin);
+                }
+                //it is checked that it is balanced
+                if (height(origin.getLeft()) - height(origin.getRight()) == 2) {
+                    if (element.compareTo(origin.getLeft().getElement()) < 0)
+                        origin = rotateSimpleToRight(origin);
+                    else
+                        origin = rotateDoubleToRight(origin);
+                }
+            }
+        int height = maxHeight(height (origin.getLeft()),height(origin.getRight()));
+        System.out.println("Height: "+origin.getElement()+" "+height);
+        origin.setHeight(height+1);
+        return origin;
+    }
+    */
 }
