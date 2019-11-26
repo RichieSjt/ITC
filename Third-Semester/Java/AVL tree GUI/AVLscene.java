@@ -89,9 +89,7 @@ public class AVLscene extends Scene {
             insert();
         });
         delete.setOnAction(e -> {
-            arbol.deleteNode(Integer.parseInt(input.getText()));
-            displayAVLTree();
-            input.setText("");
+            delete();
         });
     }
 
@@ -142,15 +140,12 @@ public class AVLscene extends Scene {
         while (set.size() < setSize) {
             set.add(randNum.nextInt(100)+1);
         }
+        //Insert the set elements in the tree
         try{
             for(int x: set){
                 arbol.insertElement(x);
             }
         }catch(DuplicateException de){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Duplicate");
-            alert.setHeaderText(de.getMessage());
-            alert.showAndWait();
         }
         displayAVLTree();
     }
@@ -173,6 +168,16 @@ public class AVLscene extends Scene {
             alert.setHeaderText("Please introduce an element");
             alert.showAndWait();
         }
+        input.setText("");
+    }
+
+    private void delete(){
+        if(input.getText().equals(arbol.getOrigin().getElement())){
+            arbol.deleteNode(Integer.parseInt(input.getText()));
+        } else {
+            arbol.deleteNode2(Integer.parseInt(input.getText()));
+        }
+        displayAVLTree();
         input.setText("");
     }
     
