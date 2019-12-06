@@ -7,69 +7,16 @@ from pattern.es import tag as word_tag
 from PIL import Image
 from wordcloud import STOPWORDS, ImageColorGenerator, WordCloud
 
-
-def generate_word_cloud(data):
-    wordcloud = WordCloud(background_color="white").generate(data)
-    plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis("off")
-    plt.show()
-
-## Example, cleaning data from excel
-#df = pd.read_excel("Comentarios.xlsx", na_values={
-#    "Materia": ["-", "n.a"],
-#    "Evaluación": ["-1"]
-#})
-
-df = pd.read_excel("Comentarios.xlsx", na_values = ["-", "n.a"])
-
-## Number of rows           ## Number of columns
-#print(df.shape[0])         #print(df.shape[1])
-
-## Read first two rows      ## Read a specific location
-#print(df.iloc[0:2])        #print(df.iloc[0, 0])
-
-## Read by specific tags
-#print(df.loc["Materia"] == "Física")
-
-## Reading columns
-#print(df[fields])
-#print(df[["Profesor"]])
-
-teacherDict = {}
-teacher_key = 0
-comment_list = []
-graph = nx.MultiGraph()
-
-for index, row in df.iterrows():
-
-    teacher_name = row["Profesor"]
-    teacher_course = row["Materia"]
-    teacher_comment = row["Comentario"]
-    teacher_rec = row["Rec"]
-
-    teacher_data = {
-        teacher_key: [teacher_name, teacher_course, teacher_comment, teacher_rec]
-    }
-    teacherDict.update(teacher_data)
-    teacher_key += 1
-
-low_rec_common = ""
-high_rec_common = ""
-
-#Making this process for each individual comment
-for key in teacherDict:
-    items = teacherDict[key]
-    comment = items[2]
-
+def lemmatize_comment(comment):
     #Lemmatizing the comment to generalize words
     lemmatized_comment = ""
     parsed_comment = parse(comment, tokenize = False, tags = False, relations = False, chunks = False, lemmata = True, tagset = None)
     for sentence in parsed_comment.split():
         for token, tag, lemma in sentence:
             lemmatized_comment += lemma + " "
+    return lemmatized_comment
 
-    tagged_comment = word_tag(lemmatized_comment)
-
+def extract_relevant_words(tagged_comment):
     #Extracting nouns(NN), verbs(VB), adjectives(JJ) and adverbs(RB)
     #from the original comment
     relevant_words = ""
@@ -105,6 +52,64 @@ for key in teacherDict:
         
             print("Next word: noX" + next_word + "------------------------------------")
         current_word_counter += 1
+    return relevant_words
+
+def generate_word_cloud(data):
+    wordcloud = WordCloud(background_color="white").generate(data)
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis("off")
+    plt.show()
+
+## Example, cleaning data from excel
+#df = pd.read_excel("Comentarios.xlsx", na_values={
+#    "Materia": ["-", "n.a"],
+#    "Evaluación": ["-1"]
+#})
+
+df = pd.read_excel("Comentarios.xlsx", na_values = ["-", "n.a"])
+
+## Number of rows           ## Number of columns
+#print(df.shape[0])         #print(df.shape[1])
+
+## Read first two rows      ## Read a specific location
+#print(df.iloc[0:2])        #print(df.iloc[0, 0])
+
+## Read by specific tags
+#print(df.loc["Materia"] == "Física")
+
+## Reading columns
+#print(df[fields])
+#print(df[["Profesor"]])
+
+teacherDict = {}
+teacher_key = 0
+low_rec_common = ""
+high_rec_common = ""
+medium_rec_common = ""
+comment_list = []
+graph = nx.MultiGraph()
+
+for index, row in df.iterrows():
+
+    teacher_name = row["Profesor"]
+    teacher_course = row["Materia"]
+    teacher_comment = row["Comentario"]
+    teacher_rec = row["Rec"]
+
+    teacher_data = {
+        teacher_key: [teacher_name, teacher_course, teacher_comment, teacher_rec]
+    }
+    teacherDict.update(teacher_data)
+    teacher_key += 1
+
+#Making this process for each individual comment
+for key in teacherDict:
+    items = teacherDict[key]
+    comment = items[2]
+
+    lemmatized_comment = lemmatize_comment(comment)
+    tagged_comment = word_tag(lemmatized_comment)
+    relevant_words = extract_relevant_words(tagged_comment)
         
     #print("Relevant: " + relevant_words)
     items.append(relevant_words)
@@ -113,15 +118,19 @@ for key in teacherDict:
     #Adding the comment relevant words as a node into the graph
     graph.add_node(relevant_words)
 
-    #Printing the cloud from the teacher
+    rec = items[3]
     print("Cloud from: " + items[0])
-    if items[3] < 5:
+    if rec < 4:
         print("Low rec, rec: " + str(items[3]))
         low_rec_common += relevant_words
-    if items[3] >= 5:
+    if rec > 4 and rec <= 7:
+        print("Medium rec, rec: " + str(items[3]))
+        medium_rec_common += relevant_words
+    if rec >= 8:
         print("High rec, rec: " + str(items[3]))
         high_rec_common += relevant_words
     
+    #Printing the cloud from the teacher
     generate_word_cloud(relevant_words)
 
 #Bueno para recursar
