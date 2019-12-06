@@ -1,11 +1,12 @@
-from pattern.es import parse, split
-from pattern.es import tag as word_tag
-import pandas as pd
-import numpy as np
-from PIL import Image
-from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 import matplotlib.pyplot as plt
 import networkx as nx
+import numpy as np
+import pandas as pd
+from pattern.es import parse, split
+from pattern.es import tag as word_tag
+from PIL import Image
+from wordcloud import STOPWORDS, ImageColorGenerator, WordCloud
+
 
 def generate_word_cloud(data):
     wordcloud = WordCloud(background_color="white").generate(data)
@@ -36,8 +37,8 @@ df = pd.read_excel("Comentarios.xlsx", na_values = ["-", "n.a"])
 
 teacherDict = {}
 teacher_key = 0
-
-graph = nx.Graph()
+comment_list = []
+graph = nx.MultiGraph()
 
 for index, row in df.iterrows():
 
@@ -107,6 +108,7 @@ for key in teacherDict:
         
     #print("Relevant: " + relevant_words)
     items.append(relevant_words)
+    comment_list.append(relevant_words)
 
     #Adding the comment relevant words as a node into the graph
     graph.add_node(relevant_words)
@@ -134,11 +136,19 @@ generate_word_cloud(low_rec_common)
 print("Cloud from: High rec teachers")
 generate_word_cloud(high_rec_common)
 
-#TODO: Compare the relevant words from each comment to every other comment to check for duplicates
+#Compare the relevant words from each comment to every other comment to check for duplicates
 #if a duplicate exists, then add an edge between those two nodes.
+list_check = []
+counter = 1
+for i in range(0, len(comment_list)-1):
+    for j in range(counter, len(comment_list)):
+        list_check = str(set(comment_list[i].split())) + str(set(comment_list[j].split()))
+        if len(list_check) != len(set(list_check)):
+            for k in range(0, len(list_check) - len(set(list_check))):
+                graph.add_edge(comment_list[i], comment_list[j])
+    counter += 1
+            
+print(nx.info(graph))
 
 nx.draw_random(graph)
 plt.show()
-
-#add_node()
-#add_edge()
