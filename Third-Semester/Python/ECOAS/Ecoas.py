@@ -141,6 +141,8 @@ generate_word_cloud(low_rec_common)
 #tokens = [t for t in low_rec_common.split()]
 #freq = nltk.FreqDist(tokens)
 #freq.plot(20, cumulative=False)
+print("Cloud from: Medium rec teachers")
+generate_word_cloud(medium_rec_common)
 
 print("Cloud from: High rec teachers")
 generate_word_cloud(high_rec_common)
