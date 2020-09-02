@@ -1,21 +1,19 @@
 public class Prime{
     public static void main(String[] args) {
-        int[] counter = new int[10000];
-        int i, j;
+        int[] prime = new int[20];
         
-        for(i = 1; i < 10000; i++){
-            if(counter[i] == 0){
-                int f = i+1;
-                for(j = 10000; j >= 2; j--){
-                    if(j%f == 0){
-                        counter[j-1] = counter[j-1]++;
-                    }
-                }
+        //Sieve of Eratosthenes
+        for(int p = 2; p*p <= prime.length; p++){
+            if(prime[p-1] == 0){
+                for(int i = p*p; i <= prime.length; i += p) 
+                    prime[i-1] += 1;
             }
         }
-        for(i = 0; i < counter.length; i++){
-            if (counter[i] == 3){
-                System.out.print(i+1);
+
+        //We start at index 1 to exclude number 1 from the sieve
+        for(int i = 1; i < prime.length; i++){
+            if (prime[i] == 0){
+                System.out.println(i+1);
             }
         }
     }
