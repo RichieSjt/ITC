@@ -1,6 +1,7 @@
 	------remove a commit------
 
 https://stackoverflow.com/questions/448919/how-can-i-remove-a-commit-on-github
+Usar d para borrar los commits
 
 -----Start a new repository-------
 
