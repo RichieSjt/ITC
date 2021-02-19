@@ -1,6 +1,9 @@
 # Compiled class file
 *.class
 
+#Python compiled classes
+*.pyc
+
 # Log file
 *.log
 
@@ -11,3 +14,4 @@ g++
 .vscode
 Github
 Personal
+Workspaces
