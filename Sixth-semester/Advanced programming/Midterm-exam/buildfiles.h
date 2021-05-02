@@ -131,7 +131,7 @@ void buildFiles() {
   fclose(file1);
   fclose(file2);
   
-  // If the files are not created we build them
+  // If the files are empty we build them
   if(size == 0){
     FILE *alice_file = fopen("alice.txt", "r");
     file1 = fopen("file1", "wb+");
