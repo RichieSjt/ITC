@@ -1,0 +1,35 @@
+<?xml encoding="UTF-8"?>
+
+<!ELEMENT pl (pub+,customer+)>
+
+<!ELEMENT pub (pname,area,beer+)>
+<!ATTLIST pub
+  PID ID #REQUIRED>
+
+<!ELEMENT customer (cname,gender,age)>
+<!ATTLIST customer
+  CID ID #REQUIRED
+  frequents IDREFS #REQUIRED
+  likes IDREFS #REQUIRED>
+
+<!ELEMENT pname (#PCDATA)>
+
+<!ELEMENT area (#PCDATA)>
+
+<!ELEMENT beer (bname,color,country,price)>
+<!ATTLIST beer
+  BID ID #REQUIRED>
+
+<!ELEMENT cname (#PCDATA)>
+
+<!ELEMENT gender (#PCDATA)>
+
+<!ELEMENT age (#PCDATA)>
+
+<!ELEMENT bname (#PCDATA)>
+
+<!ELEMENT color (#PCDATA)>
+
+<!ELEMENT country (#PCDATA)>
+
+<!ELEMENT price (#PCDATA)>

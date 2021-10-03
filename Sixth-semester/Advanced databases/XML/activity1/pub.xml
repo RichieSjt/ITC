@@ -1,0 +1,105 @@
+<pl>
+    <pub PID="P1">
+        <pname>Celtic's</pname>
+        <area>Polanco</area>
+        <beer BID="B1">
+            <bname>Becks</bname>
+            <color>Blond</color>
+            <country>Gemany</country>
+            <price>80</price>
+        </beer>
+        <beer BID="B2">
+            <bname>Guinness</bname>
+            <color>Dark</color>
+            <country>Ireland</country>
+            <price>60</price>
+        </beer>
+        <beer BID="B3">
+            <bname>Heineken</bname>
+            <color>Blond</color>
+            <country>Netherlands</country>
+            <price>50</price>
+        </beer>
+    </pub>
+
+    <pub PID="P2">
+        <pname>King´s</pname>
+        <area>Satélite</area>
+        <beer BID="B2-P2">
+            <bname>Guinness</bname>
+            <color>Dark</color>
+            <country>Ireland</country>
+            <price>100</price>
+        </beer>
+    </pub>
+
+    <pub PID="P3">
+        <pname>Eire</pname>
+        <area>Condesa</area>
+        <beer BID="B3-P3">
+            <bname>Heineken</bname>
+            <color>Blond</color>
+            <country>Netherlands</country>
+            <price>50</price>
+        </beer>
+    </pub>
+
+    <pub PID="P4">
+        <pname>Eire</pname>
+        <area>Condesa</area>
+        <beer BID="B3-P4">
+            <bname>Heineken</bname>
+            <color>Blond</color>
+            <country>Netherlands</country>
+            <price>50</price>
+        </beer>
+        <beer BID="B4">
+            <bname>Saporo</bname>
+            <color>Blond</color>
+            <country>Japan</country>
+            <price>40</price>
+        </beer>
+    </pub>
+
+    <pub PID="P5">
+        <pname>Nada</pname>
+        <area>Atizapán</area>
+        <beer BID="B5">
+            <bname>Bohemia</bname>
+            <color>Blond</color>
+            <country>México</country>
+            <price>20</price>
+        </beer>
+    </pub>
+
+
+    <customer CID="C1" frequents="P1 P2" likes="B1 B2">
+        <cname>John</cname>
+        <gender>Male</gender>
+        <age>24</age>
+    </customer>
+
+    <customer CID="C2" frequents="P2" likes="B2">
+        <cname>Mary</cname>
+        <gender>Female</gender>
+        <age>28</age>
+    </customer>
+
+    <customer CID="C3" frequents="P3 P5" likes="B3">
+        <cname>Alice</cname>
+        <gender>Female</gender>
+        <age>36</age>
+    </customer>
+
+    <customer CID="C4" frequents="P4" likes="B2 B4">
+        <cname>Bob</cname>
+        <gender>Male</gender>
+        <age>32</age>
+    </customer>
+
+    <customer CID="C5" frequents="P5 P1" likes="B5">
+        <cname>Pete</cname>
+        <gender>Male</gender>
+        <age>39</age>
+    </customer>
+</pl>
