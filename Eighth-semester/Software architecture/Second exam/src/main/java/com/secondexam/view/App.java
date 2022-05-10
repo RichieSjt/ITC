@@ -102,10 +102,11 @@ public class App {
 
         if(cuenta == null) { return; }
 
-        int selection = menuSeleccion("menuCuentaSeleccionada", 3);
         boolean exit = false;
-
+        
         while(!exit) {
+            int selection = menuSeleccion("menuCuentaSeleccionada", 3);
+
             switch (selection) {
                 case 1: deposito(index); break;
                 case 2: retiro(index); break;
@@ -125,10 +126,11 @@ public class App {
 
         if(cuenta == null) { return; }
 
-        int selection = menuSeleccion("menuCuentaSeleccionada", 3);
         boolean exit = false;
-
+        
         while(!exit) {
+            int selection = menuSeleccion("menuCuentaSeleccionada", 3);
+            
             switch (selection) {
                 case 1: deposito(index); break;
                 case 2: retiro(index); break;
@@ -153,7 +155,7 @@ public class App {
         System.out.print("Banco del retiro (Banco A, Banco B, Banco C): ");
         String banco = sc.nextLine();
 
-        System.out.print("Tipo de retiro (atm, banco): ");
+        System.out.print("Tipo de retiro (ATM, Banco): ");
         String tipo = sc.nextLine();
         cuentaService.retirar(index, monto, banco, tipo);
     }

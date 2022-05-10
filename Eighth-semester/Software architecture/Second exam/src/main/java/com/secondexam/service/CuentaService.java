@@ -20,8 +20,8 @@ public class CuentaService {
         double montoFinal = montoActual + monto;
 
         cuentaRepository.actualizarMontoDeCuenta(index, montoFinal);
-        System.out.println("\nSe depositó la cantidad '" + monto + "' a la cuenta '" + cuenta.getNumeroDeCuenta() + "'");
-        System.out.println("El monto final de la cuenta es de: " + cuenta.getMonto());
+        System.out.println("\nSe depositó la cantidad $" + monto + " a la cuenta '" + cuenta.getNumeroDeCuenta() + "'");
+        System.out.println("El monto final de la cuenta es de: $" + cuenta.getMonto());
     }
 
     public void retirar(int index, double monto, String banco, String tipo){
@@ -34,11 +34,15 @@ public class CuentaService {
         double montoFinal = montoActual - retiro.getMonto();
 
         if (montoFinal < 0) {
-            System.out.println("Fondos insuficientes");
+            System.out.println("\nFondos insuficientes");
             return;
         }
 
         cuentaRepository.actualizarMontoDeCuenta(index, montoFinal);
+        System.out.println("\nSe retiró la cantidad '" + monto + "' de la cuenta '" + cuenta.getNumeroDeCuenta() + "'");
+        System.out.println("El monto final del retiro incluyendo comisiones es de: $" + retiro.getMonto());
+        System.out.println("El monto final de la cuenta es de: $" + cuenta.getMonto());
+
     }
 
     public void agregarCuenta(Cuenta c){

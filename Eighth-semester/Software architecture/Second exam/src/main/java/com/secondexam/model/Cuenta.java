@@ -30,6 +30,6 @@ public class Cuenta {
     }
 
     public String toString() {
-        return "Nombre: " + nombre + ", Número de cuenta: " + numeroDeCuenta + ", Monto: " + monto;
+        return "Nombre: " + nombre + ", Número de cuenta: " + numeroDeCuenta + ", Saldo: " + monto;
     }
 }
