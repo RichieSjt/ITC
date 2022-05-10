@@ -6,11 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CuentaRepository {
+    // Se optó por usar el patrón de diseño singleton para el repository de nuestra cuenta
+    // ya que al ser el equivalente a nuestra base de datos, se requiere que solo exista una
+    // instancia de esta a la vez.
     private static CuentaRepository instance;
     private List<Cuenta> cuentas;
 
     private CuentaRepository(){
         cuentas = new ArrayList<>();
+    }
+
+    public void resetCuentas() {
+        cuentas.clear();
     }
 
     public Cuenta obtenerCuentaPorIndice(int index){
@@ -40,10 +47,11 @@ public class CuentaRepository {
         cuenta.setMonto( monto);
     }
 
-    // Patrón singleton, solo hay una instancia de la clase
     public static CuentaRepository getInstance() {
+        // Patrón singleton, solo hay una instancia de la clase
+
         if (instance == null) {
-            // Si la instancia es null, se inicializa
+            // Si la instancia no existe, se inicializa
             instance = new CuentaRepository();
         }
         return instance;
