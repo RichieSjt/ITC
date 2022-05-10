@@ -9,9 +9,11 @@ import java.util.Random;
 public class CuentaService {
     //Utilizar Singleton de Cuenta Repository para hacer uso de sus métodos e implementar todos los métodos faltantes
     public CuentaRepository cuentaRepository;
-    
+    RetiroFactory retiroFactory;
+
     public CuentaService() {
         cuentaRepository = CuentaRepository.getInstance();
+        retiroFactory = new RetiroFactory();
     }
 
     public void depositar(int index, double monto){
@@ -28,7 +30,6 @@ public class CuentaService {
         Cuenta cuenta = cuentaRepository.obtenerCuentaPorIndice(index);
         double montoActual = cuenta.getMonto();
         
-        RetiroFactory retiroFactory = new RetiroFactory();
         Retiro retiro = retiroFactory.crearRetiro(tipo, monto, banco);
 
         double montoFinal = montoActual - retiro.getMonto();
