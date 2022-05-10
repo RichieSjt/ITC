@@ -39,7 +39,7 @@ public class CuentaService {
         }
 
         cuentaRepository.actualizarMontoDeCuenta(index, montoFinal);
-        System.out.println("\nSe retiró la cantidad '" + monto + "' de la cuenta '" + cuenta.getNumeroDeCuenta() + "'");
+        System.out.println("\nSe retiró la cantidad $" + monto + " de la cuenta '" + cuenta.getNumeroDeCuenta() + "'");
         System.out.println("El monto final del retiro incluyendo comisiones es de: $" + retiro.getMonto());
         System.out.println("El monto final de la cuenta es de: $" + cuenta.getMonto());
 
